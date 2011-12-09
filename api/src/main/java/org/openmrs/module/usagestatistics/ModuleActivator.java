@@ -11,6 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+
 package org.openmrs.module.usagestatistics;
 
 import java.util.UUID;
@@ -19,6 +20,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.jmx.JMXService;
+import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBean;
+import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBeanImpl;
 import org.openmrs.module.usagestatistics.tasks.AggregatorTask;
 import org.openmrs.module.usagestatistics.tasks.SendReportsTask;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
@@ -41,8 +47,14 @@ public class ModuleActivator extends BaseModuleActivator {
 	public void started() {
 		log.info("Starting usage statistics module");
 		
+		registerMXBean();
+		
+		log.info("Registered usage statistics JMX bean");
+		
 		registerAggregationTask();
 		registerSendReportsTask();
+		
+		log.info("Registered usage statistics tasks");
 	}
 
 	/**
@@ -51,21 +63,27 @@ public class ModuleActivator extends BaseModuleActivator {
 	@Override
 	public void stopped() {
 		log.info("Shutting down usage statistics module");
+		
+		unregisterMXBean();
+		
+		log.info("Unregistered usage statistics JMX bean");
 
 		unregisterTasks();
+		
+		log.info("Unregistered usage statistics tasks");
 	}
 	
 	/**
 	 * Registers the aggregation task if it hasn't already been registered
 	 */
-	public boolean registerAggregationTask() {
+	private boolean registerAggregationTask() {
 		return registerTask(Constants.TASK_AGGREGATE_DATA, "Deletes or aggregates old usage statistics data", AggregatorTask.class, 60 * 60l);
 	}
 
 	/**
 	 * Registers the reports task if it hasn't already been registered
 	 */
-	public boolean registerSendReportsTask() {
+	private boolean registerSendReportsTask() {
 		return registerTask(Constants.TASK_SEND_REPORTS, "Sends usage statistics reports", SendReportsTask.class, 60 * 60 * 24l);		
 	}
 
@@ -126,5 +144,30 @@ public class ModuleActivator extends BaseModuleActivator {
 		TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
 		if (taskDef != null)
 			Context.getSchedulerService().deleteTask(taskDef.getId());
+	}
+	
+	/**
+	 * Registers the usage statistics MXBean with the JMX module
+	 */
+	private void registerMXBean() {
+		Module jmxModule = ModuleFactory.getModuleById("jmx");
+		
+		if (ModuleFactory.isModuleStarted(jmxModule)) {
+			JMXService jmxSvc = Context.getService(JMXService.class);
+			UsageStatisticsMXBean bean = new UsageStatisticsMXBeanImpl();
+			jmxSvc.registerBean(Constants.MODULE_ID, bean);
+		}
+	}
+	
+	/**
+	 * Unregisters the usage statistics MXBean with the JMX module
+	 */
+	private void unregisterMXBean() {
+		Module jmxModule = ModuleFactory.getModuleById("jmx");
+		
+		if (ModuleFactory.isModuleStarted(jmxModule)) {
+			JMXService jmxSvc = Context.getService(JMXService.class);
+			jmxSvc.unregisterBean(Constants.MODULE_ID);
+		}
 	}
 }
