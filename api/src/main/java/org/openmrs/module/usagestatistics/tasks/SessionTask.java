@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.usagestatistics;
+package org.openmrs.module.usagestatistics.tasks;
 
 import org.openmrs.api.context.Context;
 

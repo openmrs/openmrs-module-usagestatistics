@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.usagestatistics;
+package org.openmrs.module.usagestatistics.tasks;
 
 import java.io.File;
 import java.io.StringWriter;
@@ -30,6 +30,11 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 
 import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.usagestatistics.ActionCriteria;
+import org.openmrs.module.usagestatistics.Constants;
+import org.openmrs.module.usagestatistics.Options;
+import org.openmrs.module.usagestatistics.ReportFrequency;
+import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.notification.Message;
 import org.openmrs.notification.MessageException;
 import org.openmrs.util.OpenmrsUtil;

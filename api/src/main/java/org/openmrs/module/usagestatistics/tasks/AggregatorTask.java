@@ -11,12 +11,14 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.usagestatistics;
+package org.openmrs.module.usagestatistics.tasks;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.usagestatistics.Constants;
+import org.openmrs.module.usagestatistics.UsageStatsService;
 
 /**
  * Task to aggregate raw data and delete old data
