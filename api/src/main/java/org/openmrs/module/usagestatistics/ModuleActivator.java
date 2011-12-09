@@ -14,15 +14,13 @@
 
 package org.openmrs.module.usagestatistics;
 
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
-import org.openmrs.module.Module;
-import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.jmx.JMXService;
 import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBean;
 import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBeanImpl;
 import org.openmrs.module.usagestatistics.tasks.AggregatorTask;
@@ -150,12 +148,15 @@ public class ModuleActivator extends BaseModuleActivator {
 	 * Registers the usage statistics MXBean with the JMX module
 	 */
 	private void registerMXBean() {
-		Module jmxModule = ModuleFactory.getModuleById("jmx");
-		
-		if (ModuleFactory.isModuleStarted(jmxModule)) {
-			JMXService jmxSvc = Context.getService(JMXService.class);
+		try {
 			UsageStatisticsMXBean bean = new UsageStatisticsMXBeanImpl();
-			jmxSvc.registerBean(Constants.MODULE_ID, bean);
+			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
+			Object jmxService = Context.getService(c);
+			Method regMethod = jmxService.getClass().getDeclaredMethod("registerBean", String.class, Object.class);
+			regMethod.invoke(jmxService, Constants.MODULE_ID, bean);
+			
+		} catch (Exception e) {
+			log.warn("JMX module not loaded. Unable to register MBean");
 		}
 	}
 	
@@ -163,11 +164,14 @@ public class ModuleActivator extends BaseModuleActivator {
 	 * Unregisters the usage statistics MXBean with the JMX module
 	 */
 	private void unregisterMXBean() {
-		Module jmxModule = ModuleFactory.getModuleById("jmx");
-		
-		if (ModuleFactory.isModuleStarted(jmxModule)) {
-			JMXService jmxSvc = Context.getService(JMXService.class);
-			jmxSvc.unregisterBean(Constants.MODULE_ID);
+		try {
+			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
+			Object jmxService = Context.getService(c);
+			Method unregMethod = jmxService.getClass().getDeclaredMethod("unregisterBean", String.class);
+			unregMethod.invoke(jmxService, Constants.MODULE_ID);
+			
+		} catch (Exception e) {
+			log.warn("JMX module not loaded. Unable to unregister MBean");
 		}
 	}
 }

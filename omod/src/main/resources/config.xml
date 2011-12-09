@@ -10,9 +10,6 @@
 	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>
 	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
 	<require_version>1.8.3</require_version>
-	<require_modules>
-		<require_module version="1.0-SNAPSHOT">org.openmrs.module.jmx</require_module>
-	</require_modules>
 	
 	<extension>
 		<point>org.openmrs.admin.maintenance.localHeader</point>
