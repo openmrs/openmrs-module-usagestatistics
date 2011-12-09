@@ -29,13 +29,13 @@ public class StatsUtils {
 	protected static final Log log = LogFactory.getLog(StatsUtils.class);
 	
 	/**
-	 * Utility method to get a parsed usage filter parameter
+	 * Utility method to get a parsed action criteria parameter
 	 * @param request the HTTP request object
-	 * @param name the name of the usage filter parameter
+	 * @param name the name of the parameter
 	 * @param def the default value if parameter doesn't exist or is invalid
-	 * @return the filter value
+	 * @return the action criteria value
 	 */
-	public static ActionCriteria getUsageFilterParameter(HttpServletRequest request, String name, ActionCriteria def) {
+	public static ActionCriteria getActionCriteriaParameter(HttpServletRequest request, String name, ActionCriteria def) {
 		String str = request.getParameter(name);
 		if (str != null) {
 			try {

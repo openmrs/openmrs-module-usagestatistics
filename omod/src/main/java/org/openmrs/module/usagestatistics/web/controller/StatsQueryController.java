@@ -58,7 +58,7 @@ public abstract class StatsQueryController extends AbstractController {
 		// Calculate inclusive until date by adding a day
 		untilInclusive = StatsUtils.addDaysToDate(until, 1);
 		
-		usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
+		usageFilter = StatsUtils.getActionCriteriaParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		// Get paging info
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);

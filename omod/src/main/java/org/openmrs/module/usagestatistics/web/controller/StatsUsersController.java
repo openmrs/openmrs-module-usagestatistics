@@ -43,7 +43,7 @@ public class StatsUsersController extends ExportableStatsQueryController {
 		List<Role> roles = Context.getUserService().getAllRoles();
 		
 		String role = ServletRequestUtils.getStringParameter(request, "role");
-		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
+		ActionCriteria usageFilter = StatsUtils.getActionCriteriaParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		if (role != null && role.length() == 0)
 			role = null;

@@ -38,7 +38,7 @@ public class StatsLocationsController extends ExportableStatsQueryController {
 	 */
 	@Override
 	protected void augmentModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
+		ActionCriteria usageFilter = StatsUtils.getActionCriteriaParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		UsageStatsService svc = Context.getService(UsageStatsService.class);
 		List<Object[]> stats = svc.getLocationsStats(getFromDate(), getUntilInclusiveDate(), usageFilter);	

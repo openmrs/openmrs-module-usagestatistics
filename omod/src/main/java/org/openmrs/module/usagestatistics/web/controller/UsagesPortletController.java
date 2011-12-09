@@ -59,7 +59,7 @@ public class UsagesPortletController extends PortletController {
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
 		PagingInfo paging = new PagingInfo(offset, Constants.RESULTS_PAGE_SIZE);
 		
-		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
+		ActionCriteria usageFilter = StatsUtils.getActionCriteriaParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		int userId = ServletRequestUtils.getIntParameter(request, "userId", 0);
 		User user = (userId > 0) ? Context.getUserService().getUser(userId) : null;
