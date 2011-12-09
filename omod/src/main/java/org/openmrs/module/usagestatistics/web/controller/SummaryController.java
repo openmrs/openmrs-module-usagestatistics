@@ -27,7 +27,7 @@ import org.openmrs.module.usagestatistics.util.StatsUtils;
 /**
  * Controller for the summary page
  */
-public class StatsSummaryController extends ExportableStatsQueryController {
+public class SummaryController extends ExportableStatsQueryController {
 
 	/**
 	 * @see ExportableStatsQueryController#augmentModel(Map, HttpServletRequest, HttpServletResponse)
