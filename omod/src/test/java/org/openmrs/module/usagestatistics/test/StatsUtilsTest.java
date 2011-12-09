@@ -24,7 +24,7 @@ import org.openmrs.module.usagestatistics.util.StatsUtils;
 /**
  * Test cases for the utility class StatsUtils
  */
-public class StatsUtilsTests {
+public class StatsUtilsTest {
 	
 	protected static final SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	
