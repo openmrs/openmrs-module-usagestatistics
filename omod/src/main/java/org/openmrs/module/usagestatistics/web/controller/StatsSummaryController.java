@@ -37,6 +37,8 @@ public class StatsSummaryController extends ExportableStatsQueryController {
 		Date monthAgo = StatsUtils.addDaysToDate(null, -30);
 		
 		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		
+		model.put("onlineUsers", svc.getOnlineUserCount());
 		model.put("recordsOpen", svc.getOpenRecordsCount());
 		
 		List<Object[]> locationStats = svc.getMostActiveLocations(monthAgo, 5);	

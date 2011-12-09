@@ -16,11 +16,21 @@ package org.openmrs.module.usagestatistics.jmx;
 
 import javax.management.MXBean;
 
+/**
+ * Interface for the usage statistics JMX bean
+ */
 @MXBean
 public interface UsageStatisticsMXBean {
+	
+	/**
+	 * Gets the number of online users
+	 * @return the number of users
+	 */
+	public int getOnlineUsers();
 
 	/**
 	 * Gets the number of open records
+	 * @return the number of open records
 	 */
 	public int getOpenRecords();
 }

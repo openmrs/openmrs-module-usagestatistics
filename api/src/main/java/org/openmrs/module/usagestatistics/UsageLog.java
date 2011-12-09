@@ -29,6 +29,8 @@ import org.openmrs.util.OpenmrsConstants;
 public class UsageLog {
 	
 	protected static final Log log = LogFactory.getLog(UsageLog.class);
+	
+	protected static int onlineUserCount = 0;
 
 	/**
 	 * The type of a usage event
@@ -62,6 +64,22 @@ public class UsageLog {
 		Patient patient = encounter.getPatient();
 		
 		logEvent(user, patient, encounter, null, null);
+	}
+	
+	/**
+	 * Gets the online user count
+	 * @return the number of users
+	 */
+	public static int getOnlineUserCount() {
+		return onlineUserCount;
+	}
+	
+	/**
+	 * Sets the online user count
+	 * @param count the number of users
+	 */
+	public static void setOnlineUserCount(int count) {
+		onlineUserCount = count;
 	}
 	
 	/**

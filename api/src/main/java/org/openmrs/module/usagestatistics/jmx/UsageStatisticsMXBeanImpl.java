@@ -18,7 +18,24 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 
+/**
+ * Implementation of the usage statistics JMX bean
+ */
 public class UsageStatisticsMXBeanImpl implements UsageStatisticsMXBean {
+	
+	/**
+	 * @see org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBean#getOnlineUsers()
+	 */
+	@Override
+	public int getOnlineUsers() {
+		Context.openSession();
+		Context.addProxyPrivilege(Constants.PRIV_VIEW_USAGE_STATS);
+		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		int count = svc.getOnlineUserCount();
+		Context.removeProxyPrivilege(Constants.PRIV_VIEW_USAGE_STATS);
+		Context.closeSession();
+		return count;
+	}
 
 	/**
 	 * @see org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBean#getOpenRecords()

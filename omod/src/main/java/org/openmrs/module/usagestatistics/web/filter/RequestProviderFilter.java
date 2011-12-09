@@ -20,9 +20,12 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.usagestatistics.UsageLog;
+import org.openmrs.web.user.CurrentUsers;
 import org.springframework.web.filter.RequestContextFilter;
 
 /**
@@ -44,6 +47,11 @@ public class RequestProviderFilter extends RequestContextFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		
+		// Count online users and record
+		HttpSession session = request.getSession();
+		int count = CurrentUsers.getCurrentUsernames(session).size();
+		UsageLog.setOnlineUserCount(count);
 		
 		requests.set(request);
 		

@@ -29,6 +29,7 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.usagestatistics.Usage;
 import org.openmrs.module.usagestatistics.ActionCriteria;
+import org.openmrs.module.usagestatistics.UsageLog;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.db.UsageStatsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
@@ -106,6 +107,14 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	@Override
 	public int getAggregateCount() throws APIException {
 		return dao.getAggregateCount();
+	}
+	
+	/**
+	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getOnlineUserCount()
+	 */
+	@Override
+	public int getOnlineUserCount() throws APIException {
+		return UsageLog.getOnlineUserCount();
 	}
 	
 	/**

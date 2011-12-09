@@ -15,6 +15,10 @@
 	<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
 			<td>
+				<b><spring:message code="usagestatistics.summary.onlineUsers" /></b>
+				${onlineUsers}
+			</td>
+			<td>
 				<b><spring:message code="usagestatistics.summary.recordsBeingViewed" /></b>
 				${recordsOpen}
 			</td>

@@ -80,6 +80,15 @@ public interface UsageStatsService extends OpenmrsService {
 	public int getAggregateCount() throws APIException;
 	
 	/**
+	 * Gets the number of online users
+	 * @return the number of online users
+	 * @throws APIException
+	 */
+	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
+	@Transactional(readOnly = true)
+	public int getOnlineUserCount() throws APIException;
+	
+	/**
 	 * Gets the total number of different patient records that have been accessed since the given time
 	 * @param from the start time
 	 * @return the number of patient records
