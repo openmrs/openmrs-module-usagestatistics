@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="/WEB-INF/taglibs/spring.tld" %>
 
 <%@ attribute name="formFieldName" required="true" %>
-<%@ attribute name="initialValue" type="org.openmrs.module.usagestatistics.UsageFilter" required="false" %>
+<%@ attribute name="initialValue" type="org.openmrs.module.usagestatistics.ActionCriteria" required="false" %>
 <%@ attribute name="showNoUsage" type="java.lang.Boolean" required="false" %>
 
 <select name="${formFieldName}">

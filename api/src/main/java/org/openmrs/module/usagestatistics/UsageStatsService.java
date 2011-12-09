@@ -49,7 +49,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, UsageFilter filter, PagingInfo paging) throws APIException;
+	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws APIException;
 	
 	/**
 	 * Gets the last matching usage event
@@ -80,6 +80,16 @@ public interface UsageStatsService extends OpenmrsService {
 	public int getAggregateCount() throws APIException;
 	
 	/**
+	 * Gets the total number of different patient records that have been accessed since the given time
+	 * @param from the start time
+	 * @return the number of patient records
+	 * @throws APIException
+	 */
+	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
+	@Transactional(readOnly = true)
+	public int getRecordsAccessedCount(Date from) throws APIException;
+	
+	/**
 	 * Deletes usages which are older than the given number of days
 	 * @param daysOld the number of days
 	 * @return the number of usages that were deleted
@@ -97,7 +107,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public List<Object[]> getLocationsStats(Date from, Date until, UsageFilter filter) throws APIException;
+	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws APIException;
 	
 	/**
 	 * Gets usage statistics for roles
@@ -110,7 +120,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public List<Object[]> getRolesStats(Date from, Date until, Location location, UsageFilter filter) throws APIException;
+	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException;
 	
 	/**
 	 * Gets per user usage statistics for users with the specified role
@@ -124,7 +134,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, UsageFilter filter) throws APIException;
+	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws APIException;
 	
 	/**
 	 * Gets the most active locations based on usage count
@@ -182,7 +192,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public int[] getFoundByStats(Date from, Date until, Location location, UsageFilter filter) throws APIException;
+	public int[] getFoundByStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException;
 	
 	/**
 	 * Gets usage statistics between two dates

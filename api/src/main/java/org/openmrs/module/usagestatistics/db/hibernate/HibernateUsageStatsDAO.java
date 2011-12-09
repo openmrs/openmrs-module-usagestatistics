@@ -39,7 +39,7 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.Usage;
 import org.openmrs.module.usagestatistics.Options;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.db.UsageStatsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
@@ -76,7 +76,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getUsages(User, Patient, Date, Date, boolean, PagingInfo)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, UsageFilter filter, PagingInfo paging) throws DAOException {		
+	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws DAOException {		
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT SQL_CALC_FOUND_ROWS {s.*} ");
 		sb.append("FROM " + TABLE_USAGE + " s ");
@@ -91,13 +91,13 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 		if (until != null)
 			sb.append("  AND s.timestamp < '" + dfSQL.format(until) + "' ");
 		
-		if (filter == UsageFilter.CREATED)
+		if (filter == ActionCriteria.CREATED)
 			sb.append("  AND s.created = 1 ");
-		else if (filter == UsageFilter.ENCOUNTER)
+		else if (filter == ActionCriteria.ENCOUNTER)
 			sb.append("  AND s.usage_id IN (SELECT usage_id FROM " + TABLE_ENCOUNTER + ") ");
-		else if (filter == UsageFilter.UPDATED)
+		else if (filter == ActionCriteria.UPDATED)
 			sb.append("  AND s.updated = 1 ");
-		else if (filter == UsageFilter.VOIDED)
+		else if (filter == ActionCriteria.VOIDED)
 			sb.append("  AND s.voided = 1 ");
 		
 		sb.append("ORDER BY s.timestamp DESC ");
@@ -156,6 +156,16 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getAggregateCount()
+	 */
+	public int getRecordsAccessedCount(Date from) throws DAOException {
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "SELECT COUNT(DISTINCT patient_id) FROM " + TABLE_USAGE + " WHERE timestamp >= FROM_UNIXTIME(" + (from.getTime() / 1000) + ");";
+		Number res = (Number)session.createSQLQuery(sql).uniqueResult();
+		return res.intValue();
+	}
+	
+	/**
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#deleteUsages(Date)
 	 */
 	public int deleteUsages(Date until) throws DAOException {
@@ -168,7 +178,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	/**
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getLocationsStats(int)
 	 */
-	public List<Object[]> getLocationsStats(Date from, Date until, UsageFilter filter) throws DAOException {
+	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT l.location_id, l.name, ");
 		sb.append("  COUNT(DISTINCT d.user_id) as `active_users`, ");
@@ -187,7 +197,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	/**
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getRolesStats(Location)
 	 */
-	public List<Object[]> getRolesStats(Date from, Date until, Location location, UsageFilter filter) throws DAOException {	
+	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws DAOException {	
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT r.role, ");
 		sb.append("  COUNT(DISTINCT d.user_id) as `active_users`, ");
@@ -207,7 +217,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	/**
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getUsersStats(Location, String, int)
 	 */
-	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, UsageFilter filter) throws DAOException {
+	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT ");
 		sb.append("  u.user_id, ");
@@ -240,7 +250,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	 * @param orderBy the column to order by
 	 * @return the array of statistics
 	 */
-	private List<Object[]> completeAggregateQuery(StringBuffer sb, Date from, Date until, Location location, String groupBy, UsageFilter filter, String orderBy) {
+	private List<Object[]> completeAggregateQuery(StringBuffer sb, Date from, Date until, Location location, String groupBy, ActionCriteria filter, String orderBy) {
 		if (from != null)
 			sb.append("  AND d.date >= '" + dfSQL.format(from) + "' ");
 		if (until != null)
@@ -251,15 +261,15 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 		
 		sb.append("GROUP BY " + groupBy + " ");
 			
-		if (filter == UsageFilter.ANY)
+		if (filter == ActionCriteria.ANY)
 			sb.append("HAVING usages > 0 ");
-		else if (filter == UsageFilter.CREATED)
+		else if (filter == ActionCriteria.CREATED)
 			sb.append("HAVING creates > 0 ");
-		else if (filter == UsageFilter.ENCOUNTER)
+		else if (filter == ActionCriteria.ENCOUNTER)
 			sb.append("HAVING encounters > 0 ");
-		else if (filter == UsageFilter.UPDATED)
+		else if (filter == ActionCriteria.UPDATED)
 			sb.append("HAVING updates > 0 ");
-		else if (filter == UsageFilter.VOIDED)
+		else if (filter == ActionCriteria.VOIDED)
 			sb.append("HAVING voids > 0 ");
 		
 		sb.append("ORDER BY " + orderBy + ";");
@@ -362,9 +372,9 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getFoundByTotals(Date, Date, Location, UsageFilter)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getFoundByTotals(Date, Date, Location, ActionCriteria)
 	 */
-	public int[] getFoundByTotals(Date from, Date until, Location location, UsageFilter filter) throws DAOException {
+	public int[] getFoundByTotals(Date from, Date until, Location location, ActionCriteria filter) throws DAOException {
 		int[] totals = new int[4];
 		totals[1] = getFoundByTotal(from, until, location, filter, Usage.FOUNDBY_LINK);
 		totals[2] = getFoundByTotal(from, until, location, filter, Usage.FOUNDBY_ID_QUERY);
@@ -383,7 +393,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	 * @param foundBy the found by option
 	 * @return the total number of events
 	 */
-	protected int getFoundByTotal(Date from, Date until, Location location, UsageFilter filter, int foundBy) {
+	protected int getFoundByTotal(Date from, Date until, Location location, ActionCriteria filter, int foundBy) {
 		int locationAttrTypeId = Options.getInstance().getLocationAttributeTypeId();
 		
 		StringBuffer sb = new StringBuffer();
@@ -399,13 +409,13 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 		
 		sb.append("WHERE e.found_by = " + foundBy + " ");
 		
-		if (filter == UsageFilter.CREATED)
+		if (filter == ActionCriteria.CREATED)
 			sb.append("AND e.created = 1 ");
-		else if (filter == UsageFilter.ENCOUNTER)
+		else if (filter == ActionCriteria.ENCOUNTER)
 			sb.append("AND e.usage_id IN (SELECT usage_id FROM " + TABLE_ENCOUNTER + ") ");
-		else if (filter == UsageFilter.UPDATED)
+		else if (filter == ActionCriteria.UPDATED)
 			sb.append("AND e.updated = 1 ");
-		else if (filter == UsageFilter.VOIDED)
+		else if (filter == ActionCriteria.VOIDED)
 			sb.append("AND e.voided = 1 ");
 		
 		appendDateRange(sb, "e", from, until);

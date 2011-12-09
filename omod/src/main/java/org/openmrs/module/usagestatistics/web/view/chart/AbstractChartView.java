@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.openmrs.Location;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
@@ -42,7 +42,7 @@ public abstract class AbstractChartView extends AbstractView {
 	private static Color bkColor = new Color(240, 240, 250);
 	
 	private Date from, until, untilInclusive;
-	private UsageFilter usageFilter;
+	private ActionCriteria usageFilter;
 	private Location location;
 
 	/**
@@ -65,7 +65,7 @@ public abstract class AbstractChartView extends AbstractView {
 		from = (Date)model.get("from");
 		until = (Date)model.get("until");
 		untilInclusive = (Date)model.get("untilInclusive");
-		usageFilter = (UsageFilter)model.get("usageFilter");
+		usageFilter = (ActionCriteria)model.get("usageFilter");
 		location = (Location)model.get("location");
 		
 		JFreeChart chart = createChart(model, request);
@@ -113,7 +113,7 @@ public abstract class AbstractChartView extends AbstractView {
 	 * Gets the usage filter
 	 * @return the usage filter
 	 */
-	public UsageFilter getUsageFilter() {
+	public ActionCriteria getUsageFilter() {
 		return usageFilter;
 	}
 	

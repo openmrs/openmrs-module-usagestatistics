@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 
 public class StatsUtils {
 	
@@ -35,12 +35,12 @@ public class StatsUtils {
 	 * @param def the default value if parameter doesn't exist or is invalid
 	 * @return the filter value
 	 */
-	public static UsageFilter getUsageFilterParameter(HttpServletRequest request, String name, UsageFilter def) {
+	public static ActionCriteria getUsageFilterParameter(HttpServletRequest request, String name, ActionCriteria def) {
 		String str = request.getParameter(name);
 		if (str != null) {
 			try {
 				int i = Integer.parseInt(str);
-				return UsageFilter.values()[i];
+				return ActionCriteria.values()[i];
 			} catch (Exception ex) {
 				log.warn("Invalid usage filter value: " + str);
 			}

@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Role;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -43,7 +43,7 @@ public class StatsUsersController extends ExportableStatsQueryController {
 		List<Role> roles = Context.getUserService().getAllRoles();
 		
 		String role = ServletRequestUtils.getStringParameter(request, "role");
-		UsageFilter usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", UsageFilter.ANY);
+		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		if (role != null && role.length() == 0)
 			role = null;

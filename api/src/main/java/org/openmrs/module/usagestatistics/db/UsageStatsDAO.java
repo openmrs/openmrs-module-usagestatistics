@@ -22,7 +22,7 @@ import org.openmrs.User;
 import org.openmrs.api.APIException;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.usagestatistics.Usage;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 
 /**
@@ -48,7 +48,7 @@ public interface UsageStatsDAO {
 	 * @return a list of usages
 	 * @throws APIException
 	 */
-	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, UsageFilter filter, PagingInfo paging) throws DAOException;
+	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws DAOException;
 	
 	/**
 	 * Gets the last matching usage
@@ -76,7 +76,7 @@ public interface UsageStatsDAO {
 	 * @return an array of locations and statistics
 	 * @throws APIException
 	 */
-	public List<Object[]> getLocationsStats(Date from, Date until, UsageFilter filter) throws DAOException;
+	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws DAOException;
 	
 	/**
 	 * Gets usage statistics for roles
@@ -87,7 +87,7 @@ public interface UsageStatsDAO {
 	 * @return an array of roles and statistics
 	 * @throws DAOException
 	 */
-	public List<Object[]> getRolesStats(Date from, Date until, Location location, UsageFilter filter) throws DAOException;
+	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws DAOException;
 	
 	/**
 	 * Gets usage statistics for users with a specific role
@@ -99,7 +99,7 @@ public interface UsageStatsDAO {
 	 * @return an array of user ids, names and statistics
 	 * @throws DAOException
 	 */
-	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, UsageFilter filter) throws DAOException;
+	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws DAOException;
 	
 	/**
 	 * Gets the most active locations based on usage count
@@ -147,7 +147,7 @@ public interface UsageStatsDAO {
 	 * @return an array of totals
 	 * @throws DAOException
 	 */
-	public int[] getFoundByTotals(Date from, Date until, Location location, UsageFilter filter) throws DAOException;
+	public int[] getFoundByTotals(Date from, Date until, Location location, ActionCriteria filter) throws DAOException;
 	
 	/**
 	 * Gets usage statistics between two dates
@@ -183,6 +183,14 @@ public interface UsageStatsDAO {
 	 * @throws DAOException
 	 */
 	public int getAggregateCount() throws DAOException;
+	
+	/**
+	 * Gets the total number of different patient records that have been accessed since the given time
+	 * @param from the start time
+	 * @return the number of patient records
+	 * @throws DAOException
+	 */
+	public int getRecordsAccessedCount(Date from) throws DAOException;
 	
 	/**
 	 * Aggregates usages per day/user - inserting into the daily table

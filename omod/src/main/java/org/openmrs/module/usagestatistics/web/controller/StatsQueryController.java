@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
@@ -41,7 +41,7 @@ public abstract class StatsQueryController extends AbstractController {
 	
 	private Date from, until, untilInclusive;
 	private Location location;
-	private UsageFilter usageFilter;
+	private ActionCriteria usageFilter;
 	private PagingInfo paging;
 	
 	protected final Map<String, Object> buildModel(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -58,7 +58,7 @@ public abstract class StatsQueryController extends AbstractController {
 		// Calculate inclusive until date by adding a day
 		untilInclusive = StatsUtils.addDaysToDate(until, 1);
 		
-		usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", UsageFilter.ANY);
+		usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		// Get paging info
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
@@ -125,7 +125,7 @@ public abstract class StatsQueryController extends AbstractController {
 	 * Gets the usage filter
 	 * @return the usage filter
 	 */
-	public UsageFilter getUsageFilter() {
+	public ActionCriteria getUsageFilter() {
 		return usageFilter;
 	}
 	

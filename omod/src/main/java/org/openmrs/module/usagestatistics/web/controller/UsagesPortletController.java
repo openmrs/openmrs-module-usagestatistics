@@ -27,7 +27,7 @@ import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.Usage;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
@@ -59,7 +59,7 @@ public class UsagesPortletController extends PortletController {
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
 		PagingInfo paging = new PagingInfo(offset, Constants.RESULTS_PAGE_SIZE);
 		
-		UsageFilter usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", UsageFilter.ANY);
+		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		int userId = ServletRequestUtils.getIntParameter(request, "userId", 0);
 		User user = (userId > 0) ? Context.getUserService().getUser(userId) : null;

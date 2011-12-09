@@ -11,12 +11,13 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+
 package org.openmrs.module.usagestatistics;
 
 /**
- * Enumeration of the how usages can be filtered in a query
+ * Enumeration of the how usages can be filtered by action in a query
  */
-public enum UsageFilter {
+public enum ActionCriteria {
 	ANY_OR_NONE,
 	ANY,
 	CREATED,

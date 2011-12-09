@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 
@@ -38,7 +38,7 @@ public class StatsLocationsController extends ExportableStatsQueryController {
 	 */
 	@Override
 	protected void augmentModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UsageFilter usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", UsageFilter.ANY);
+		ActionCriteria usageFilter = StatsUtils.getUsageFilterParameter(request, "usageFilter", ActionCriteria.ANY);
 		
 		UsageStatsService svc = Context.getService(UsageStatsService.class);
 		List<Object[]> stats = svc.getLocationsStats(getFromDate(), getUntilInclusiveDate(), usageFilter);	

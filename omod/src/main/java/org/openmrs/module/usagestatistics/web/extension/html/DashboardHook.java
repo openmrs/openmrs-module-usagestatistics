@@ -4,7 +4,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Extension;
 import org.openmrs.module.usagestatistics.UsageLog;
-import org.openmrs.module.usagestatistics.web.filter.RequestProviderFilter;
+import org.openmrs.module.usagestatistics.web.filter.UsageFilter;
 
 public class DashboardHook extends Extension {
 	/**
@@ -17,7 +17,7 @@ public class DashboardHook extends Extension {
 		if (patientIdStr != null) {
 			int patientId = Integer.parseInt(patientIdStr);
 			
-			String phrase = RequestProviderFilter.getRequest().getParameter("phrase");
+			String phrase = UsageFilter.getCurrentRequest().getParameter("phrase");
 			
 			Patient patient = Context.getPatientService().getPatient(patientId);
 			if (patient != null)

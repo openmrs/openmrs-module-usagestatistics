@@ -9,14 +9,33 @@
 <%@ include file="template/localHeader.jsp"%>
 
 <b class="boxHeader">
+	<spring:message code="usagestatistics.summary.now" />
+</b>
+<div class="box" style="overflow: hidden">
+	<table cellpadding="3" cellspacing="0" width="100%">
+		<tr>
+			<td width="50%">
+				<b><spring:message code="usagestatistics.summary.usersOnline" /></b>
+				${activeUserCount}
+			</td>
+			<td width="50%">
+				<b><spring:message code="usagestatistics.summary.recordsBeingViewed" /></b>
+				${recordsOpen}
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br />
+
+<b class="boxHeader">
 	<spring:message code="usagestatistics.summary.lastMonth" />
 </b>
 <div class="box" style="overflow: hidden">
 	<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
-			<td><b><spring:message code="usagestatistics.summary.mostActiveLocations" /></b></td>
-			<td width="20"></td>
-			<td><b><spring:message code="usagestatistics.summary.mostActiveUsers" /></b></td>
+			<td width="50%"><b><spring:message code="usagestatistics.summary.mostActiveLocations" /></b></td>
+			<td width="50%"><b><spring:message code="usagestatistics.summary.mostActiveUsers" /></b></td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -29,7 +48,6 @@
 					</c:forEach>
 				</table>
 			</td>
-			<td width="20"></td>
 			<td valign="top">
 				<table cellpadding="2" cellspacing="0" width="100%">
 					<c:forEach items="${userStats}" var="row" varStatus="rowStatus">

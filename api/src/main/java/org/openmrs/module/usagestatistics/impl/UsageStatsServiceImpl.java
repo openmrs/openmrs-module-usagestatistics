@@ -28,7 +28,7 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.usagestatistics.Usage;
-import org.openmrs.module.usagestatistics.UsageFilter;
+import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.db.UsageStatsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
@@ -78,7 +78,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	/**
 	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getUsages(User, Patient, Date, Date, int, PagingInfo)
 	 */
-	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, UsageFilter filter, PagingInfo paging) throws APIException {
+	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws APIException {
 		return dao.getUsages(user, patient, from, until, filter, paging);
 	}
 	
@@ -104,6 +104,13 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
+	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getRecordsAccessedCount(Date)
+	 */
+	public int getRecordsAccessedCount(Date from) throws APIException {
+		return dao.getRecordsAccessedCount(from);
+	}
+	
+	/**
 	 * @see org.openmrs.module.usagestatistics.UsageStatsService#deleteUsages(int)
 	 */
 	public int deleteUsages(int daysOld) throws APIException {
@@ -117,21 +124,21 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	/**
 	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getLocationsStats(int)
 	 */
-	public List<Object[]> getLocationsStats(Date from, Date until, UsageFilter filter) throws APIException {
+	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws APIException {
 		return dao.getLocationsStats(from, until, filter);
 	}
 	
 	/**
 	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getRolesStats(Location)
 	 */
-	public List<Object[]> getRolesStats(Date from, Date until, Location location, UsageFilter filter) throws APIException {
+	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException {
 		return dao.getRolesStats(from, until, location, filter);
 	}
 
 	/**
 	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getUsersStats(int,String,int)
 	 */
-	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, UsageFilter filter) throws APIException {
+	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws APIException {
 		return dao.getUsersStats(from, until, location, role, filter);
 	}
 	
@@ -164,9 +171,9 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getFoundByStats(Date, Date, Location, UsageFilter)
+	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getFoundByStats(Date, Date, Location, ActionCriteria)
 	 */
-	public int[] getFoundByStats(Date from, Date until, Location location, UsageFilter filter) throws APIException {
+	public int[] getFoundByStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException {
 		return dao.getFoundByTotals(from, until, location, filter);
 	}
 	

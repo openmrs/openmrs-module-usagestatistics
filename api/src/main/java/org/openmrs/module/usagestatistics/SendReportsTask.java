@@ -64,7 +64,7 @@ public class SendReportsTask extends SessionTask {
 			
 			UsageStatsService svc = Context.getService(UsageStatsService.class);
 			//List<Object[]> roleStats = svc.getRolesStats(null, null, null, UsageFilter.ANY);
-			List<Object[]> roleStats = svc.getRolesStats(since, until, null, UsageFilter.ANY);
+			List<Object[]> roleStats = svc.getRolesStats(since, until, null, ActionCriteria.ANY);
 			
 			AdministrationService adminSvc = Context.getAdministrationService();
 			ImplementationId implId = adminSvc.getImplementationId();
