@@ -20,7 +20,7 @@ import javax.management.MXBean;
 public interface UsageStatisticsMXBean {
 
 	/**
-	 * Gets the number of online users
+	 * Gets the number of open records
 	 */
-	public int getOnlineUsers();
+	public int getOpenRecords();
 }

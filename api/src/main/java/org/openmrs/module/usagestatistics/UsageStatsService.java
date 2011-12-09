@@ -87,7 +87,7 @@ public interface UsageStatsService extends OpenmrsService {
 	 */
 	@Authorized({Constants.PRIV_VIEW_USAGE_STATS})
 	@Transactional(readOnly = true)
-	public int getRecordsAccessedCount(Date from) throws APIException;
+	public int getOpenRecordsCount() throws APIException;
 	
 	/**
 	 * Deletes usages which are older than the given number of days

@@ -35,10 +35,9 @@ public class StatsSummaryController extends ExportableStatsQueryController {
 	@Override
 	protected void augmentModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Date monthAgo = StatsUtils.addDaysToDate(null, -30);
-		Date tenMinsAgo = new Date(System.currentTimeMillis() - (10 * 60 * 1000));
 		
 		UsageStatsService svc = Context.getService(UsageStatsService.class);
-		model.put("recordsOpen", svc.getRecordsAccessedCount(tenMinsAgo));
+		model.put("recordsOpen", svc.getOpenRecordsCount());
 		
 		List<Object[]> locationStats = svc.getMostActiveLocations(monthAgo, 5);	
 		List<Object[]> userStats = svc.getMostActiveUsers(monthAgo, 5);	
