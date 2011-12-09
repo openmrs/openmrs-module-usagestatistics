@@ -14,11 +14,7 @@
 <div class="box" style="overflow: hidden">
 	<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
-			<td width="50%">
-				<b><spring:message code="usagestatistics.summary.usersOnline" /></b>
-				${activeUserCount}
-			</td>
-			<td width="50%">
+			<td>
 				<b><spring:message code="usagestatistics.summary.recordsBeingViewed" /></b>
 				${recordsOpen}
 			</td>

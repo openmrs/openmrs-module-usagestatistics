@@ -14,13 +14,9 @@
 
 package org.openmrs.module.usagestatistics.jmx;
 
-import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageStatsService;
-
 public class UsageStatisticsMXBeanImpl implements UsageStatisticsMXBean {
 
 	public int getOnlineUsers() {
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
-		return 69;
+		return 69;//RequestLog.getOnlineUserCount(null);
 	}
 }

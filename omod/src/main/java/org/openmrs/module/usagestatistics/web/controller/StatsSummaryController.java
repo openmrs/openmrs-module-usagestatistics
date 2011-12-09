@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.UsageStatsService;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
-import org.openmrs.module.usagestatistics.web.filter.UsageFilter;
 
 /**
  * Controller for the summary page
@@ -39,8 +38,6 @@ public class StatsSummaryController extends ExportableStatsQueryController {
 		Date tenMinsAgo = new Date(System.currentTimeMillis() - (10 * 60 * 1000));
 		
 		UsageStatsService svc = Context.getService(UsageStatsService.class);
-		
-		model.put("activeUserCount", UsageFilter.getActiveUserCount(tenMinsAgo));
 		model.put("recordsOpen", svc.getRecordsAccessedCount(tenMinsAgo));
 		
 		List<Object[]> locationStats = svc.getMostActiveLocations(monthAgo, 5);	
