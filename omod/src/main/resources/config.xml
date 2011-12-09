@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+	<id>@MODULE_ID@</id>
+	<name>@MODULE_NAME@</name>
+	<version>@MODULE_VERSION@</version>
+	<package>@MODULE_PACKAGE@</package>
+	<author>Rowan Seymour</author>
+	<description>Statistics on usage of OpenMRS</description>
+	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>
+	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
+	<require_version>1.8.3</require_version>
+	
+	<extension>
+		<point>org.openmrs.admin.maintenance.localHeader</point>
+		<class>@MODULE_PACKAGE@.web.extension.html.MaintenanceLinksExt</class>
+	</extension>
+	<extension>
+		<point>org.openmrs.patientDashboardTab</point>
+		<class>@MODULE_PACKAGE@.web.extension.html.PatientUsageTabExt</class>
+	</extension>
+	<extension>
+		<point>org.openmrs.patientDashboard.Header</point>
+		<class>@MODULE_PACKAGE@.web.extension.html.DashboardHook</class>
+	</extension>
+	
+	<advice>
+		<point>org.openmrs.api.PatientService</point>
+		<class>@MODULE_PACKAGE@.advice.PatientServiceAdvice</class>
+	</advice>
+	
+	<advice>
+		<point>org.openmrs.api.EncounterService</point>
+		<class>@MODULE_PACKAGE@.advice.EncounterServiceAdvice</class>
+	</advice>
+	
+	<privilege>
+		<name>View Usage Statistics</name>
+		<description>Able to view usage statistics</description>
+	</privilege>
+	
+	<privilege>
+		<name>Manage Usage Statistics</name>
+		<description>Able to manage and configure usage statistics</description>
+	</privilege>
+	
+	<globalProperty>
+		<property>usagestatistics.minUsageInterval</property>
+		<defaultValue>1800</defaultValue>
+		<description>The minimum time between page accesses to constitute a unique usage event (seconds)</description>
+	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.ignoreSystemDevelopers</property>
+		<defaultValue>false</defaultValue>
+		<description>If usage of users with the System Developer role should be ignored</description>
+	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.locationAttributeTypeId</property>
+		<defaultValue>7</defaultValue>
+		<description>Person attribute to be used for user location</description>
+	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.autoDeleteDays</property>
+		<defaultValue>14</defaultValue>
+		<description>The number of days after which events should be automatically deleted</description>
+	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.reportFrequency</property>
+		<defaultValue></defaultValue>
+		<description>The frequency of reports</description>
+	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.reportRecipients</property>
+		<defaultValue></defaultValue>
+		<description>The recipient email addresses for reports</description>
+	</globalProperty>
+	
+	<filter>
+		<filter-name>usageStatsRequestFilter</filter-name>
+		<filter-class>@MODULE_PACKAGE@.web.filter.RequestProviderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>usageStatsRequestFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	
+	<mappingFiles>
+		${omodHbmConfig}
+	</mappingFiles>
+</module>
+

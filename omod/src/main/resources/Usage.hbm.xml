@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="@MODULE_PACKAGE@">
+	
+	<class name="Usage" table="usagestatistics_usage">
+
+		<id name="usageId" type="int" column="usage_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="user" class="org.openmrs.User" not-null="true" column="user_id" />
+		
+		<many-to-one name="patient" class="org.openmrs.Patient" column="patient_id" />
+		
+		<property name="timestamp" not-null="true" type="java.util.Date" column="timestamp" />
+		
+		<property name="created" not-null="true" type="java.lang.Boolean" column="created" />
+		
+		<property name="updated" not-null="true" type="java.lang.Boolean" column="updated" />
+		
+		<property name="voided" not-null="true" type="java.lang.Boolean" column="voided" />
+		
+		<property name="foundBy" not-null="true" type="int" column="found_by" />
+		
+		<property name="query" type="java.lang.String" column="query" />
+		
+		<set name="encounters" table="usagestatistics_encounter" lazy="true" inverse="false">
+			<key>
+				<column name="usage_id" not-null="true"/>
+			</key>
+			<many-to-many class="org.openmrs.Encounter">
+				<column name="encounter_id" not-null="true"/>
+			</many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
+

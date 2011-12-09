@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  		    http://www.springframework.org/schema/context
+  		    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  		    http://www.springframework.org/schema/jee
+  		    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+  		    http://www.springframework.org/schema/tx
+  		    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+  		    http://www.springframework.org/schema/aop
+  		    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+  		    http://www.springframework.org/schema/util
+  		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+	<context:component-scan base-package="org.openmrs.module.usagestatistics.web.controller" />
+
+	<!-- ========================= URL mappings ========================== -->
+
+	<bean id="usageStatsUrlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order">
+			<value>1</value>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="module/usagestatistics/summary.htm">statsSummaryController</prop>
+				<prop key="module/usagestatistics/time.htm">statsTimeController</prop>
+				<prop key="module/usagestatistics/locations.htm">statsLocationsController</prop>
+				<prop key="module/usagestatistics/roles.htm">statsRolesController</prop>
+				<prop key="module/usagestatistics/users.htm">statsUsersController</prop>
+				<prop key="module/usagestatistics/searches.htm">statsSearchesController</prop>
+				<prop key="module/usagestatistics/usages.htm">statsUsagesController</prop>
+				<prop key="module/usagestatistics/encounters.htm">statsEncountersController</prop>
+				<prop key="module/usagestatistics/options.htm">statsOptionsController</prop>
+				
+				<prop key="module/usagestatistics/chart.htm">statsChartController</prop>
+				
+				<prop key="**/usages.portlet">statsUsagesPortletController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- ========================= Views ========================= -->
+
+	<bean id="statsLocationsCSVView" class="org.openmrs.module.usagestatistics.web.view.csv.StatsLocationsCSVView" />
+
+	<bean id="statsRolesCSVView" class="org.openmrs.module.usagestatistics.web.view.csv.StatsRolesCSVView" />
+
+	<bean id="statsUsersCSVView" class="org.openmrs.module.usagestatistics.web.view.csv.StatsUsersCSVView" />
+	
+	<bean id="statsDateRangeChartView" class="org.openmrs.module.usagestatistics.web.view.chart.DateRangeChartView" />
+	
+	<bean id="statsTimeChartView" class="org.openmrs.module.usagestatistics.web.view.chart.TimeChartView" />
+	
+	<bean id="statsFoundByChartView" class="org.openmrs.module.usagestatistics.web.view.chart.FoundByChartView" />
+
+	<!-- ========================= Controllers ========================= -->
+	
+	<bean id="statsSummaryController" class="org.openmrs.module.usagestatistics.web.controller.StatsSummaryController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/summary</value>
+		</property>
+	</bean>
+
+	<bean id="statsTimeController" class="org.openmrs.module.usagestatistics.web.controller.ExportableStatsQueryController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/time</value>
+		</property>
+	</bean>
+
+	<bean id="statsLocationsController"
+		class="org.openmrs.module.usagestatistics.web.controller.StatsLocationsController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/locations</value>
+		</property>
+		<property name="exportView">
+			<ref bean="statsLocationsCSVView" />
+		</property>
+	</bean>
+
+	<bean id="statsRolesController" class="org.openmrs.module.usagestatistics.web.controller.StatsRolesController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/roles</value>
+		</property>
+		<property name="exportView">
+			<ref bean="statsRolesCSVView" />
+		</property>
+	</bean>
+
+	<bean id="statsUsersController" class="org.openmrs.module.usagestatistics.web.controller.StatsUsersController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/users</value>
+		</property>
+		<property name="exportView">
+			<ref bean="statsUsersCSVView" />
+		</property>
+	</bean>
+	
+	<bean id="statsSearchesController" class="org.openmrs.module.usagestatistics.web.controller.StatsSearchesController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/searches</value>
+		</property>
+	</bean>
+
+	<bean id="statsUsagesController" class="org.openmrs.module.usagestatistics.web.controller.ExportableStatsQueryController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/usages</value>
+		</property>
+	</bean>
+	
+	<bean id="statsEncountersController" class="org.openmrs.module.usagestatistics.web.controller.ExportableStatsQueryController">
+		<property name="pageViewName">
+			<value>module/usagestatistics/encounters</value>
+		</property>
+	</bean>
+
+	<bean id="statsOptionsController" class="org.openmrs.module.usagestatistics.web.controller.OptionsController">
+		<property name="commandName">
+			<value>options</value>
+		</property>
+		<property name="formView">
+			<value>module/usagestatistics/options</value>
+		</property>
+		<property name="successView">
+			<value>options.htm</value>
+		</property>
+		<property name="validator">
+			<bean class="org.openmrs.module.usagestatistics.validator.OptionsValidator" />
+		</property>
+	</bean>
+	
+	<bean id="statsChartController" class="org.openmrs.module.usagestatistics.web.controller.ChartStatsQueryController">
+		<property name="chartViews">
+			<map>
+				<entry key="date"><ref bean="statsDateRangeChartView" /></entry>
+				<entry key="time"><ref bean="statsTimeChartView" /></entry>
+				<entry key="foundBy"><ref bean="statsFoundByChartView" /></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="statsUsagesPortletController" class="org.openmrs.module.usagestatistics.web.controller.UsagesPortletController" />
+	
+	<!-- ========================= Services ========================= -->
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.usagestatistics.UsageStatsService</value>
+				<bean
+					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager">
+						<ref bean="transactionManager" />
+					</property> <!-- more req stuff -->
+					<property name="target">
+						<bean class="org.openmrs.module.usagestatistics.impl.UsageStatsServiceImpl">
+							<property name="usageStatsDAO">
+								<bean class="org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatsDAO">
+									<property name="sessionFactory">
+										<ref bean="sessionFactory" />
+									</property>
+								</bean>
+							</property>
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<list>
+							<ref bean="authorizationInterceptor" />
+						</list>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean
+							class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ========================= Other beans ========================= -->
+	
+	<bean class="org.openmrs.module.usagestatistics.util.ContextProvider" />
+	
+</beans>

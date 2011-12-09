@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+<sqldiff version="1.0">
+	<help>
+		USE:
+			The diffs are ordered by datamodel version number.
+			The script can be run in a top down fashion and is
+			expected to not fail or overwrite old data		
+	</help>
+		
+	<diff>
+		<version>0.9.2</version>
+		<author>Rowan Seymour</author>
+		<date>Oct 4th 2009</date>
+		<description>
+			Adding usagestatistics_usage,usagestatistics_daily tables
+		</description>
+		<sql>
+			CREATE TABLE `usagestatistics_usage` (
+			  `usage_id` int(11) NOT NULL auto_increment,
+			  `user_id` int(11) default NULL,
+			  `patient_id` int(11) default NULL,
+			  `timestamp` datetime NOT NULL,
+			  `created` tinyint(1) NOT NULL default '0',
+			  `updated` tinyint(1) NOT NULL default '0',
+			  `voided` tinyint(1) NOT NULL default '0',
+			  `found_by` int(4) NOT NULL default '0',
+			  `query` varchar(50) default NULL,
+			  PRIMARY KEY  USING BTREE (`usage_id`),
+			  KEY `user_id` (`user_id`),
+			  KEY `patient_id` (`patient_id`),
+			  CONSTRAINT `usagestats_usage_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+			  CONSTRAINT `usagestats_usage_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			
+			CREATE TABLE  `usagestatistics_daily` (
+			  `date` date NOT NULL,
+			  `user_id` int(11) NOT NULL,
+			  `location_id` int(11) default NULL,
+			  `usages` int(5) NOT NULL default '0',
+			  `creates` int(5) NOT NULL default '0',
+			  `updates` int(5) NOT NULL default '0',
+			  `voids` int(5) NOT NULL default '0',
+			  PRIMARY KEY  (`date`,`user_id`),
+			  KEY `usagestatistics_daily_location` (`location_id`),
+			  KEY `usagestatistics_daily_user` (`user_id`),
+			  CONSTRAINT `usagestatistics_daily_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`),
+			  CONSTRAINT `usagestatistics_daily_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		</sql>
+	</diff>
+	
+	<diff>
+		<version>1.1</version>
+		<author>Rowan Seymour</author>
+		<date>Oct 11th 2009</date>
+		<description>
+			Adding usagestatistics_encounter table
+		</description>
+		<sql>
+			CREATE TABLE `usagestatistics_encounter` (
+			  `usage_id` int(11) NOT NULL,
+			  `encounter_id` int(11) NOT NULL,
+			  KEY `usagestatistics_encounter_usage` (`usage_id`),
+			  KEY `usagestatistics_encounter_encounter` (`encounter_id`),
+			  CONSTRAINT `usagestatistics_encounter_encounter` FOREIGN KEY (`encounter_id`) REFERENCES `encounter` (`encounter_id`),
+			  CONSTRAINT `usagestatistics_encounter_usage` FOREIGN KEY (`usage_id`) REFERENCES `usagestatistics_usage` (`usage_id`) ON DELETE CASCADE
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+			
+			ALTER TABLE `usagestatistics_daily` ADD COLUMN `encounters` INT(5) NOT NULL DEFAULT 0 AFTER `creates`;
+		</sql>
+	</diff>
+</sqldiff>
