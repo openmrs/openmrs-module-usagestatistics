@@ -153,7 +153,7 @@ public class ModuleActivator extends BaseModuleActivator {
 			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
 			Object jmxService = Context.getService(c);
 			Method regMethod = jmxService.getClass().getDeclaredMethod("registerBean", String.class, String.class, Object.class);
-			regMethod.invoke(jmxService, null, Constants.MXBEAN_NAME, bean);
+			regMethod.invoke(jmxService, Constants.MXBEAN_NAME, null, bean);
 			
 		} catch (Exception e) {
 			log.warn("JMX module not loaded. Unable to register MBean");
@@ -168,7 +168,7 @@ public class ModuleActivator extends BaseModuleActivator {
 			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
 			Object jmxService = Context.getService(c);
 			Method unregMethod = jmxService.getClass().getDeclaredMethod("unregisterBean", String.class, String.class);
-			unregMethod.invoke(jmxService, null, Constants.MXBEAN_NAME);
+			unregMethod.invoke(jmxService, Constants.MXBEAN_NAME, null);
 			
 		} catch (Exception e) {
 			log.warn("JMX module not loaded. Unable to unregister MBean");
