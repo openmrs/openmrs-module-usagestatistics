@@ -19,6 +19,7 @@ package org.openmrs.module.usagestatistics;
 public class Constants {
 	// Module properties
 	public static final String MODULE_ID = "usagestatistics";
+	public static final String MXBEAN_NAME = "UsageStatistics";
 	
 	// Privileges
 	public static final String PRIV_VIEW_USAGE_STATS = "View Usage Statistics";
