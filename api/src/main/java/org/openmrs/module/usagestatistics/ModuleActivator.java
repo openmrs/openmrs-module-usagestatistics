@@ -45,7 +45,7 @@ public class ModuleActivator extends BaseModuleActivator {
 	public void started() {
 		log.info("Starting usage statistics module");
 		
-		registerMXBean();
+		registerMBean();
 		
 		log.info("Registered usage statistics management bean");
 		
@@ -62,7 +62,7 @@ public class ModuleActivator extends BaseModuleActivator {
 	public void stopped() {
 		log.info("Shutting down usage statistics module");
 		
-		unregisterMXBean();
+		unregisterMBean();
 		
 		log.info("Unregistered usage statistics management bean");
 
@@ -147,12 +147,12 @@ public class ModuleActivator extends BaseModuleActivator {
 	/**
 	 * Registers the usage statistics MXBean with the JMX module
 	 */
-	private void registerMXBean() {
+	private void registerMBean() {
 		try {
 			UsageStatisticsMXBean bean = new UsageStatisticsMXBeanImpl();
 			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
 			Object jmxService = Context.getService(c);
-			Method regMethod = jmxService.getClass().getDeclaredMethod("registerBean", String.class, String.class, Object.class);
+			Method regMethod = jmxService.getClass().getDeclaredMethod("registerMBean", String.class, String.class, Object.class);
 			regMethod.invoke(jmxService, Constants.MXBEAN_NAME, null, bean);
 			
 		} catch (Exception e) {
@@ -163,11 +163,11 @@ public class ModuleActivator extends BaseModuleActivator {
 	/**
 	 * Unregisters the usage statistics MXBean with the JMX module
 	 */
-	private void unregisterMXBean() {
+	private void unregisterMBean() {
 		try {
 			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
 			Object jmxService = Context.getService(c);
-			Method unregMethod = jmxService.getClass().getDeclaredMethod("unregisterBean", String.class, String.class);
+			Method unregMethod = jmxService.getClass().getDeclaredMethod("unregisterMBean", String.class, String.class);
 			unregMethod.invoke(jmxService, Constants.MXBEAN_NAME, null);
 			
 		} catch (Exception e) {
