@@ -150,45 +150,5 @@
 	</bean>
 	
 	<bean id="statsUsagesPortletController" class="org.openmrs.module.usagestatistics.web.controller.UsagesPortletController" />
-	
-	<!-- ========================= Services ========================= -->
 
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>org.openmrs.module.usagestatistics.UsageStatisticsService</value>
-				<bean
-					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager">
-						<ref bean="transactionManager" />
-					</property> <!-- more req stuff -->
-					<property name="target">
-						<bean class="org.openmrs.module.usagestatistics.impl.UsageStatisticsServiceImpl">
-							<property name="usageStatsDAO">
-								<bean class="org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatisticsDAO">
-									<property name="sessionFactory">
-										<ref bean="sessionFactory" />
-									</property>
-								</bean>
-							</property>
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor" />
-						</list>
-					</property>
-					<property name="transactionAttributeSource">
-						<bean
-							class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
-
-	<!-- ========================= Other beans ========================= -->
-	
-	<bean class="org.openmrs.module.usagestatistics.util.ContextProvider" />
-	
 </beans>

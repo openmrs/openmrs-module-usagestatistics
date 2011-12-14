@@ -80,7 +80,7 @@ public class SendReportsTask extends SessionTask {
 	        context.put("roleStats", roleStats);
 	        context.put("moduleVersion", ModuleFactory.getModuleById(Constants.MODULE_ID).getVersion());
 	        
-	        URL templateUrl = getClass().getResource("reportEmail.vm");
+	        URL templateUrl = getClass().getResource("/reportEmail.vm");
 	        if (templateUrl == null) {
 	        	log.error("Unable to access email template");
 				return;
