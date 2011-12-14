@@ -142,6 +142,9 @@ public class OptionsController extends SimpleFormController {
 		TaskDefinition aggregationTaskDef = schedulerSvc.getTaskByName(Constants.TASK_AGGREGATE_DATA);
 		TaskDefinition sendReportsTaskDef = schedulerSvc.getTaskByName(Constants.TASK_SEND_REPORTS);
 		
+		boolean isJMXModuleRunning = UsageStatisticsContext.isJMXModuleRunning();
+	
+		model.put("isJMXModuleRunning", isJMXModuleRunning);
 		model.put("aggregationTask", aggregationTaskDef);
 		model.put("sendReportsTask", sendReportsTaskDef);
 		model.put("locationAttrs", locationAttrs);

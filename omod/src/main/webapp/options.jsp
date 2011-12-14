@@ -67,7 +67,10 @@
 		<tr>
 			<td><spring:message code="usagestatistics.options.exposeJMXBean"/></td>
 			<td>
-				<ustats_form:checkbox path="exposeJMXBean" />
+				<ustats_form:checkbox path="exposeJMXBean" disabled="${not isJMXModuleRunning}" />
+				<c:if test="${not isJMXModuleRunning}">
+					<span class="error"><spring:message code="usagestatistics.options.jmxNotAvailable"/></span>
+				</c:if>
 			</td>
 		</tr>
 		<tr>

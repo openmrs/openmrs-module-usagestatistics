@@ -90,6 +90,19 @@ public class UsageStatisticsContext {
 			log.warn("JMX module not loaded. Unable to unregister MBean");
 		}
 	}
+	
+	/**
+	 * Checks if the JMX module is running
+	 * @return true if module is running
+	 */
+	public static boolean isJMXModuleRunning() {
+		try {
+			Context.loadClass("org.openmrs.module.jmx.JMXService");
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Register a new OpenMRS task
