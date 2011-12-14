@@ -102,7 +102,7 @@ public class UsageLog {
 		if (user != null && user.hasRole(OpenmrsConstants.SUPERUSER_ROLE) && config.isIgnoreSystemDevelopers())
 			return;
 		
-		UsageStatsService svc = (UsageStatsService)Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = (UsageStatisticsService)Context.getService(UsageStatisticsService.class);
 		Usage usage = null;
 		
 		// Check for duplication of a recent usage - update it if exists

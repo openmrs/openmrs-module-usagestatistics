@@ -26,7 +26,7 @@ import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.ActionCriteria;
-import org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatsDAO;
+import org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatisticsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -37,7 +37,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public abstract class StatsQueryController extends AbstractController {
 	
-	protected static final Log log = LogFactory.getLog(HibernateUsageStatsDAO.class);
+	protected static final Log log = LogFactory.getLog(HibernateUsageStatisticsDAO.class);
 	
 	private Date from, until, untilInclusive;
 	private Location location;

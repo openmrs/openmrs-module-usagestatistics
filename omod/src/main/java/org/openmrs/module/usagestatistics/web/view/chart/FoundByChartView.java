@@ -24,7 +24,7 @@ import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.ContextProvider;
 
 /**
@@ -34,7 +34,7 @@ public class FoundByChartView extends AbstractChartView {
 	
 	@Override
 	protected JFreeChart createChart(Map<String, Object> model, HttpServletRequest request) {	
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		int[] stats = svc.getFoundByStats(getFromDate(), getUntilInclusiveDate(), getLocation(), getUsageFilter());
 		
 		String labelLink = ContextProvider.getMessage("usagestatistics.foundBy.directLink");

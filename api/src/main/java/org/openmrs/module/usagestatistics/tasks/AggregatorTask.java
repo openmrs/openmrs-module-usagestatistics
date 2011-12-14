@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 
 /**
  * Task to aggregate raw data and delete old data
@@ -32,7 +32,7 @@ public class AggregatorTask extends SessionTask {
 	 */
 	protected void onExecute() {
 		// Firstly aggregate raw data not yet aggregated
-		UsageStatsService statsSvc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService statsSvc = Context.getService(UsageStatisticsService.class);
 		int rowsAdded = statsSvc.aggregateUsages();
 		
 		// Secondly, delete raw data of a certain age

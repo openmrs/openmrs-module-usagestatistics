@@ -34,7 +34,7 @@ import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.Options;
 import org.openmrs.module.usagestatistics.ReportFrequency;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.notification.Message;
 import org.openmrs.notification.MessageException;
 import org.openmrs.util.OpenmrsUtil;
@@ -67,7 +67,7 @@ public class SendReportsTask extends SessionTask {
 			
 			VelocityContext context = new VelocityContext();
 			
-			UsageStatsService svc = Context.getService(UsageStatsService.class);
+			UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 			//List<Object[]> roleStats = svc.getRolesStats(null, null, null, UsageFilter.ANY);
 			List<Object[]> roleStats = svc.getRolesStats(since, until, null, ActionCriteria.ANY);
 			

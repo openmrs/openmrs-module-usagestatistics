@@ -26,12 +26,13 @@ public class Constants {
 	public static final String PRIV_MANAGE_USAGE_STATS = "Manage Usage Statistics";
 	
 	// Global property names
-	public static final String PROP_MIN_USAGE_INTERVAL = "usagestatistics.minUsageInterval";
-	public static final String PROP_IGNORE_SYSTEM_DEVS = "usagestatistics.ignoreSystemDevelopers";
-	public static final String PROP_LOCATION_ATTRIBUTE_TYPE_ID = "usagestatistics.locationAttributeTypeId";
-	public static final String PROP_AUTO_DELETE_DAYS = "usagestatistics.autoDeleteDays";
-	public static final String PROP_REPORT_FREQUENCY = "usagestatistics.reportFrequency";
-	public static final String PROP_REPORT_RECIPIENTS = "usagestatistics.reportRecipients";
+	public static final String PROP_MIN_USAGE_INTERVAL = MODULE_ID + ".minUsageInterval";
+	public static final String PROP_IGNORE_SYSTEM_DEVS = MODULE_ID + ".ignoreSystemDevelopers";
+	public static final String PROP_LOCATION_ATTRIBUTE_TYPE_ID = MODULE_ID + ".locationAttributeTypeId";
+	public static final String PROP_AUTO_DELETE_DAYS = MODULE_ID + ".autoDeleteDays";
+	public static final String PROP_REPORT_FREQUENCY = MODULE_ID + ".reportFrequency";
+	public static final String PROP_REPORT_RECIPIENTS = MODULE_ID + ".reportRecipients";
+	public static final String PROP_EXPOSE_JMX_BEAN = MODULE_ID + ".exposeJMXBean";
 	
 	// Scheduled task
 	public static final String TASK_AGGREGATE_DATA = "Process Usage Statistics Data";

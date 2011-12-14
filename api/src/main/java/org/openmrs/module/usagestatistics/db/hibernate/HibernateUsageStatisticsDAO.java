@@ -40,16 +40,16 @@ import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.Usage;
 import org.openmrs.module.usagestatistics.Options;
 import org.openmrs.module.usagestatistics.ActionCriteria;
-import org.openmrs.module.usagestatistics.db.UsageStatsDAO;
+import org.openmrs.module.usagestatistics.db.UsageStatisticsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 
 /**
  * Hibernate data access layer
  */
-public class HibernateUsageStatsDAO implements UsageStatsDAO {
+public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	
-	protected static final Log log = LogFactory.getLog(HibernateUsageStatsDAO.class);
+	protected static final Log log = LogFactory.getLog(HibernateUsageStatisticsDAO.class);
 	
 	protected SessionFactory sessionFactory;
 	protected static final String TABLE_USAGE = Constants.MODULE_ID + "_usage";
@@ -66,14 +66,14 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#saveUsage(Usage)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#saveUsage(Usage)
 	 */
 	public void saveUsage(Usage event) throws DAOException {
 		sessionFactory.getCurrentSession().saveOrUpdate(event);
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getUsages(User, Patient, Date, Date, boolean, PagingInfo)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsages(User, Patient, Date, Date, boolean, PagingInfo)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws DAOException {		
@@ -116,7 +116,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getLastUsage(User, Patient, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getLastUsage(User, Patient, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public Usage getLastUsage(User user, Patient patient, int maxAgeSecs) throws DAOException {
@@ -136,7 +136,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getUsageCount()
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsageCount()
 	 */
 	public int getUsageCount() throws DAOException {
 		Session session = sessionFactory.getCurrentSession();
@@ -146,7 +146,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getAggregateCount()
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getAggregateCount()
 	 */
 	public int getAggregateCount() throws DAOException {
 		Session session = sessionFactory.getCurrentSession();
@@ -156,7 +156,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getAggregateCount()
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getAggregateCount()
 	 */
 	public int getRecordsAccessedCount(Date from) throws DAOException {
 		Session session = sessionFactory.getCurrentSession();
@@ -166,7 +166,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#deleteUsages(Date)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#deleteUsages(Date)
 	 */
 	public int deleteUsages(Date until) throws DAOException {
 		String sql = "DELETE FROM " + TABLE_USAGE + " WHERE timestamp < '" + dfSQL.format(until) + "';";
@@ -176,7 +176,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getLocationsStats(int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getLocationsStats(int)
 	 */
 	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -195,7 +195,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getRolesStats(Location)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getRolesStats(Location)
 	 */
 	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws DAOException {	
 		StringBuffer sb = new StringBuffer();
@@ -215,7 +215,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getUsersStats(Location, String, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsersStats(Location, String, int)
 	 */
 	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -278,7 +278,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostActiveLocations(Date, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostActiveLocations(Date, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getMostActiveLocations(Date since, int maxResults) throws DAOException {
@@ -306,7 +306,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostActiveUsers(Date, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostActiveUsers(Date, int)
 	 */
 	public List<Object[]> getMostActiveUsers(Date since, int maxResults) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -332,7 +332,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostCommonForms(Date, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonForms(Date, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getMostCommonForms(Date since, int maxResults) throws DAOException {
@@ -350,7 +350,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostCommonForms(Date, boolean, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonForms(Date, boolean, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getMostCommonEncounterTypes(Date since, boolean formless, int maxResults) throws DAOException {
@@ -372,7 +372,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getFoundByTotals(Date, Date, Location, ActionCriteria)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getFoundByTotals(Date, Date, Location, ActionCriteria)
 	 */
 	public int[] getFoundByTotals(Date from, Date until, Location location, ActionCriteria filter) throws DAOException {
 		int[] totals = new int[4];
@@ -425,7 +425,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getDateRangeStats(Date, Date, Location)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getDateRangeStats(Date, Date, Location)
 	 */
 	public List<Object[]> getDateRangeStats(Date from, Date until, Location location) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -451,7 +451,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getTimeBasedTotals(Date, Date, Location, boolean, String)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getTimeBasedTotals(Date, Date, Location, boolean, String)
 	 */
 	public List<Object[]> getTimeBasedTotals(Date from, Date until, Location location, boolean onlyUpdates, String func) {
 		int locationAttrTypeId = Options.getInstance().getLocationAttributeTypeId();
@@ -497,7 +497,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#aggregateUsages()
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#aggregateUsages()
 	 */
 	public int aggregateUsages() throws DAOException {
 		int locationAttrTypeId = Options.getInstance().getLocationAttributeTypeId();
@@ -542,7 +542,7 @@ public class HibernateUsageStatsDAO implements UsageStatsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#isPatientVoidedInDatabase(org.openmrs.Patient)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#isPatientVoidedInDatabase(org.openmrs.Patient)
 	 */
 	public boolean isPatientVoidedInDatabase(Patient patient) throws DAOException {
 		String sql = "SELECT voided FROM patient WHERE patient_id = " + patient.getPatientId() + ";";

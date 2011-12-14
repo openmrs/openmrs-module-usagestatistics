@@ -28,7 +28,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.Usage;
 import org.openmrs.module.usagestatistics.ActionCriteria;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 import org.openmrs.web.controller.PortletController;
@@ -67,7 +67,7 @@ public class UsagesPortletController extends PortletController {
 		int patientId = ServletRequestUtils.getIntParameter(request, "patientId", 0);
 		Patient patient = (patientId > 0) ? Context.getPatientService().getPatient(patientId) : null;
 		
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		List<Usage> usages = svc.getUsages(user, patient, from, untilInclusive, usageFilter, paging);
 		
 		String[] foundByLabels = { "directLink", "idSearch", "nameSearch" };
@@ -92,7 +92,7 @@ public class UsagesPortletController extends PortletController {
 	private void buildLegends(Map<String, Object> model) {
 		Date weekAgo = StatsUtils.addDaysToDate(null, -7);
 		
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		List<Object[]> formStats = svc.getMostCommonForms(weekAgo, 5);
 		List<Object[]> encTypeStats = svc.getMostCommonEncounterTypes(weekAgo, true, 5);
 		

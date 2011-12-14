@@ -30,24 +30,24 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.usagestatistics.Usage;
 import org.openmrs.module.usagestatistics.ActionCriteria;
 import org.openmrs.module.usagestatistics.UsageLog;
-import org.openmrs.module.usagestatistics.UsageStatsService;
-import org.openmrs.module.usagestatistics.db.UsageStatsDAO;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
+import org.openmrs.module.usagestatistics.db.UsageStatisticsDAO;
 import org.openmrs.module.usagestatistics.util.PagingInfo;
 
 /**
  * Implementation of the usage statistics service
  */
-public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageStatsService {
+public class UsageStatisticsServiceImpl extends BaseOpenmrsService implements UsageStatisticsService {
 
-	protected static final Log log = LogFactory.getLog(UsageStatsServiceImpl.class);
+	protected static final Log log = LogFactory.getLog(UsageStatisticsServiceImpl.class);
 	
-	protected UsageStatsDAO dao;
+	protected UsageStatisticsDAO dao;
 	
 	/**
 	 * Sets the database access object for this service
 	 * @param dao the database access object
 	 */
-	public void setUsageStatsDAO(UsageStatsDAO dao) {
+	public void setUsageStatsDAO(UsageStatisticsDAO dao) {
 		this.dao = dao;
 	}
 	
@@ -70,7 +70,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#saveUsage(Usage)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#saveUsage(Usage)
 	 */
 	@Override
 	public void saveUsage(Usage usage) throws APIException {
@@ -78,7 +78,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getUsages(User, Patient, Date, Date, int, PagingInfo)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getUsages(User, Patient, Date, Date, int, PagingInfo)
 	 */
 	@Override
 	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws APIException {
@@ -86,7 +86,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getLastUsage(User, Patient, int)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getLastUsage(User, Patient, int)
 	 */
 	@Override
 	public Usage getLastUsage(User user, Patient patient, int maxAgeSecs) throws APIException {
@@ -94,7 +94,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getUsageCount()
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getUsageCount()
 	 */
 	@Override
 	public int getUsageCount() throws APIException {
@@ -102,7 +102,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getAggregateCount()
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getAggregateCount()
 	 */
 	@Override
 	public int getAggregateCount() throws APIException {
@@ -110,7 +110,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getOnlineUserCount()
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getOnlineUserCount()
 	 */
 	@Override
 	public int getOnlineUserCount() throws APIException {
@@ -118,7 +118,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getRecordsAccessedCount(Date)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getRecordsAccessedCount(Date)
 	 */
 	@Override
 	public int getOpenRecordsCount() throws APIException {
@@ -127,7 +127,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#deleteUsages(int)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#deleteUsages(int)
 	 */
 	@Override
 	public int deleteUsages(int daysOld) throws APIException {
@@ -139,7 +139,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getLocationsStats(int)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getLocationsStats(int)
 	 */
 	@Override
 	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws APIException {
@@ -147,7 +147,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getRolesStats(Location)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getRolesStats(Location)
 	 */
 	@Override
 	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException {
@@ -155,7 +155,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getUsersStats(int,String,int)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getUsersStats(int,String,int)
 	 */
 	@Override
 	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws APIException {
@@ -163,7 +163,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getMostActiveLocations(Date, int)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getMostActiveLocations(Date, int)
 	 */
 	@Override
 	public List<Object[]> getMostActiveLocations(Date since, int maxResults) throws APIException {
@@ -171,7 +171,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostActiveUsers(Date, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostActiveUsers(Date, int)
 	 */
 	@Override
 	public List<Object[]> getMostActiveUsers(Date since, int maxResults) throws APIException {
@@ -179,7 +179,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostCommonForms(Date, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonForms(Date, int)
 	 */
 	@Override
 	public List<Object[]> getMostCommonForms(Date since, int maxResults) throws APIException {
@@ -187,7 +187,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatsDAO#getMostCommonEncounterTypes(Date, boolean, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonEncounterTypes(Date, boolean, int)
 	 */
 	@Override
 	public List<Object[]> getMostCommonEncounterTypes(Date since, boolean formless, int maxResults) throws APIException {
@@ -195,7 +195,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getFoundByStats(Date, Date, Location, ActionCriteria)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getFoundByStats(Date, Date, Location, ActionCriteria)
 	 */
 	@Override
 	public int[] getFoundByStats(Date from, Date until, Location location, ActionCriteria filter) throws APIException {
@@ -203,7 +203,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getDateRangeStats(Date, Date, Location)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getDateRangeStats(Date, Date, Location)
 	 */
 	@Override
 	public List<Object[]> getDateRangeStats(Date from, Date until, Location location) throws APIException {
@@ -211,7 +211,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getHourStats(org.openmrs.User)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getHourStats(org.openmrs.User)
 	 */
 	@Override
 	public int[][] getHourStats(Date from, Date until, Location location) throws APIException {
@@ -219,7 +219,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#getHourStats(org.openmrs.User)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#getHourStats(org.openmrs.User)
 	 */
 	@Override
 	public int[][] getDayOfWeekStats(Date from, Date until, Location location) throws APIException {
@@ -227,7 +227,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#aggregateUsages()
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#aggregateUsages()
 	 */
 	@Override
 	public int aggregateUsages() throws APIException {
@@ -235,7 +235,7 @@ public class UsageStatsServiceImpl extends BaseOpenmrsService implements UsageSt
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.UsageStatsService#isPatientVoidedInDatabase(org.openmrs.Patient)
+	 * @see org.openmrs.module.usagestatistics.UsageStatisticsService#isPatientVoidedInDatabase(org.openmrs.Patient)
 	 */
 	@Override
 	public boolean isPatientVoidedInDatabase(Patient patient) throws APIException {

@@ -156,16 +156,16 @@
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>
-				<value>org.openmrs.module.usagestatistics.UsageStatsService</value>
+				<value>org.openmrs.module.usagestatistics.UsageStatisticsService</value>
 				<bean
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
 						<ref bean="transactionManager" />
 					</property> <!-- more req stuff -->
 					<property name="target">
-						<bean class="org.openmrs.module.usagestatistics.impl.UsageStatsServiceImpl">
+						<bean class="org.openmrs.module.usagestatistics.impl.UsageStatisticsServiceImpl">
 							<property name="usageStatsDAO">
-								<bean class="org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatsDAO">
+								<bean class="org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatisticsDAO">
 									<property name="sessionFactory">
 										<ref bean="sessionFactory" />
 									</property>

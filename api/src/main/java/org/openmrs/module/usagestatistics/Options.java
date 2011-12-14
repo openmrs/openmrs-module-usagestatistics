@@ -30,6 +30,7 @@ public class Options {
 	protected int autoDeleteDays;
 	protected ReportFrequency reportFrequency;
 	protected String reportRecipients;
+	protected boolean exposeJMXBean;
 	
 	/**
 	 * The default constructor
@@ -58,6 +59,7 @@ public class Options {
 		autoDeleteDays = loadIntOption(Constants.PROP_AUTO_DELETE_DAYS, 14); // 2 weeks
 		reportFrequency = ReportFrequency.fromOrdinal(loadIntOption(Constants.PROP_REPORT_FREQUENCY, 0));
 		reportRecipients = loadStringOption(Constants.PROP_REPORT_RECIPIENTS, "");
+		exposeJMXBean = loadBooleanOption(Constants.PROP_EXPOSE_JMX_BEAN, false);
 	}
 	
 	/**
@@ -70,6 +72,7 @@ public class Options {
 		saveOption(Constants.PROP_AUTO_DELETE_DAYS, autoDeleteDays);
 		saveOption(Constants.PROP_REPORT_FREQUENCY, reportFrequency.getOrdinal());
 		saveOption(Constants.PROP_REPORT_RECIPIENTS, reportRecipients);
+		saveOption(Constants.PROP_EXPOSE_JMX_BEAN, exposeJMXBean);
 	}
 
 	/**
@@ -166,6 +169,22 @@ public class Options {
 	 */
 	public void setReportRecipients(String reportRecipients) {
 		this.reportRecipients = reportRecipients;
+	}
+	
+	/**
+	 * Gets whether module should expose a JMX bean
+	 * @return true if JMX bean should be exposed
+	 */
+	public boolean isExposeJMXBean() {
+		return exposeJMXBean;
+	}
+
+	/**
+	 * Sets whether module should expose a JMX bean
+	 * @param exposeJMXBean true if JMX bean should be exposed
+	 */
+	public void setExposeJMXBean(boolean exposeJMXBean) {
+		this.exposeJMXBean = exposeJMXBean;
 	}
 
 	/**

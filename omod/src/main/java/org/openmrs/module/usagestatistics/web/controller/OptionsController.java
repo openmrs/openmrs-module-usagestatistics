@@ -25,11 +25,12 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.usagestatistics.UsageStatisticsContext;
 import org.openmrs.module.usagestatistics.Options;
 import org.openmrs.module.usagestatistics.Constants;
 import org.openmrs.module.usagestatistics.ReportFrequency;
 import org.openmrs.module.usagestatistics.ReportingFrequencyEditor;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.tasks.AggregatorTask;
 import org.openmrs.module.usagestatistics.tasks.SendReportsTask;
 import org.openmrs.module.usagestatistics.tasks.SessionTask;
@@ -82,6 +83,12 @@ public class OptionsController extends SimpleFormController {
 			log.warn("Rescheduled send reports task with interval: " + reportsInterval);
 		}
 		
+		// Update JMX exposure
+		if (options.isExposeJMXBean())
+			UsageStatisticsContext.registerMBean();
+		else
+			UsageStatisticsContext.unregisterMBean();
+		
 		String msg = getMessageSourceAccessor().getMessage("usagestatistics.options.saveSuccess");
 		request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR, msg);
 		
@@ -122,7 +129,7 @@ public class OptionsController extends SimpleFormController {
 			}
 		}
 		
-		UsageStatsService statsSvc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService statsSvc = Context.getService(UsageStatisticsService.class);
 		int usageCount = statsSvc.getUsageCount();
 		int aggregateCount = statsSvc.getAggregateCount();
 		

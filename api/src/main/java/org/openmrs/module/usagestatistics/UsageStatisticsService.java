@@ -27,7 +27,7 @@ import org.openmrs.module.usagestatistics.util.PagingInfo;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface UsageStatsService extends OpenmrsService {
+public interface UsageStatisticsService extends OpenmrsService {
 	
 	/**
 	 * Saves a usage to the database

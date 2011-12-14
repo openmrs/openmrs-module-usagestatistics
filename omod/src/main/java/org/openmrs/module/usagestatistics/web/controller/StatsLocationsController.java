@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.ActionCriteria;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 
 /**
@@ -40,7 +40,7 @@ public class StatsLocationsController extends ExportableStatsQueryController {
 	protected void augmentModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionCriteria usageFilter = StatsUtils.getActionCriteriaParameter(request, "usageFilter", ActionCriteria.ANY);
 		
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		List<Object[]> stats = svc.getLocationsStats(getFromDate(), getUntilInclusiveDate(), usageFilter);	
 		
 		model.put("usageFilter", usageFilter);

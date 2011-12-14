@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.usagestatistics.UsageLog;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.MethodBeforeAdvice;
 
@@ -44,7 +44,7 @@ public class PatientServiceAdvice implements MethodBeforeAdvice, AfterReturningA
 			if (patient.getPatientId() == null)
 				usageType = UsageLog.Type.CREATED;
 			else if (patient.isVoided()) {
-				UsageStatsService svc = (UsageStatsService)Context.getService(UsageStatsService.class);
+				UsageStatisticsService svc = (UsageStatisticsService)Context.getService(UsageStatisticsService.class);
 				// Patient object is voided, but check database record
 				if (!svc.isPatientVoidedInDatabase(patient))
 					usageType = UsageLog.Type.VOIDED;

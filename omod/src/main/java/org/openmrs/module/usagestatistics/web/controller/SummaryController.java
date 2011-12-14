@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
 
 /**
@@ -36,7 +36,7 @@ public class SummaryController extends ExportableStatsQueryController {
 	protected void augmentModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Date monthAgo = StatsUtils.addDaysToDate(null, -30);
 		
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		
 		model.put("onlineUsers", svc.getOnlineUserCount());
 		model.put("recordsOpen", svc.getOpenRecordsCount());

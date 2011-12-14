@@ -22,7 +22,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.ContextProvider;
 import org.springframework.web.bind.ServletRequestUtils;
 
@@ -36,7 +36,7 @@ public class TimeChartView extends AbstractChartView {
 		// Get the time function
 		String func = ServletRequestUtils.getStringParameter(request, "func", "hour");
 		
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		
 		int[][] timeStats = new int[0][0];
 		String xAxisLabel = null;

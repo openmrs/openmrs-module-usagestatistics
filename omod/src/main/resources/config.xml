@@ -74,6 +74,11 @@
 		<defaultValue></defaultValue>
 		<description>The recipient email addresses for reports</description>
 	</globalProperty>
+	<globalProperty>
+		<property>usagestatistics.exposeJMXBean</property>
+		<defaultValue>false</defaultValue>
+		<description>If module should expose a JMX bean</description>
+	</globalProperty>
 	
 	<filter>
 		<filter-name>usageStatsRequestFilter</filter-name>

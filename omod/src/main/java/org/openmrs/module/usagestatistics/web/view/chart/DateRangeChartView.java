@@ -29,7 +29,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeTableXYDataset;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.UsageStatsService;
+import org.openmrs.module.usagestatistics.UsageStatisticsService;
 import org.openmrs.module.usagestatistics.util.ContextProvider;
 
 /**
@@ -39,7 +39,7 @@ public class DateRangeChartView extends AbstractChartView {
 	
 	@Override
 	protected JFreeChart createChart(Map<String, Object> model, HttpServletRequest request) {
-		UsageStatsService svc = Context.getService(UsageStatsService.class);
+		UsageStatisticsService svc = Context.getService(UsageStatisticsService.class);
 		List<Object[]> stats = svc.getDateRangeStats(null, null, null);
 		
 		String xAxisLabel = ContextProvider.getMessage("usagestatistics.chart.date");

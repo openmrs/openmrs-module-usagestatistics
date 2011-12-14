@@ -28,7 +28,7 @@ import org.openmrs.module.usagestatistics.util.PagingInfo;
 /**
  * Database access object for the usage event table
  */
-public interface UsageStatsDAO {
+public interface UsageStatisticsDAO {
 		
 	/**
 	 * Saves a usage
