@@ -82,13 +82,7 @@ public class OptionsController extends SimpleFormController {
 			schedulerSvc.rescheduleTask(sendReportsTaskDef);
 			log.warn("Rescheduled send reports task with interval: " + reportsInterval);
 		}
-		
-		// Update JMX exposure
-		if (options.isExposeJMXBean())
-			UsageStatisticsContext.registerMBean();
-		else
-			UsageStatisticsContext.unregisterMBean();
-		
+
 		String msg = getMessageSourceAccessor().getMessage("usagestatistics.options.saveSuccess");
 		request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR, msg);
 		
@@ -141,10 +135,7 @@ public class OptionsController extends SimpleFormController {
 		SchedulerService schedulerSvc = Context.getSchedulerService();
 		TaskDefinition aggregationTaskDef = schedulerSvc.getTaskByName(Constants.TASK_AGGREGATE_DATA);
 		TaskDefinition sendReportsTaskDef = schedulerSvc.getTaskByName(Constants.TASK_SEND_REPORTS);
-		
-		boolean isJMXModuleRunning = UsageStatisticsContext.isJMXModuleRunning();
-	
-		model.put("isJMXModuleRunning", isJMXModuleRunning);
+
 		model.put("aggregationTask", aggregationTaskDef);
 		model.put("sendReportsTask", sendReportsTaskDef);
 		model.put("locationAttrs", locationAttrs);

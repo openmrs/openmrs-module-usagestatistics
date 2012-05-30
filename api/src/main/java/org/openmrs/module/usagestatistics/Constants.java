@@ -32,7 +32,6 @@ public class Constants {
 	public static final String PROP_AUTO_DELETE_DAYS = MODULE_ID + ".autoDeleteDays";
 	public static final String PROP_REPORT_FREQUENCY = MODULE_ID + ".reportFrequency";
 	public static final String PROP_REPORT_RECIPIENTS = MODULE_ID + ".reportRecipients";
-	public static final String PROP_EXPOSE_JMX_BEAN = MODULE_ID + ".exposeJMXBean";
 	
 	// Scheduled task
 	public static final String TASK_AGGREGATE_DATA = "Process Usage Statistics Data";
