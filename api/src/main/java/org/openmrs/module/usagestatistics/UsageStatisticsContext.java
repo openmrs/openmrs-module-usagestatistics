@@ -20,8 +20,6 @@ import java.util.UUID;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBean;
-import org.openmrs.module.usagestatistics.jmx.UsageStatisticsMXBeanImpl;
 import org.openmrs.module.usagestatistics.tasks.AggregatorTask;
 import org.openmrs.module.usagestatistics.tasks.SendReportsTask;
 import org.openmrs.module.usagestatistics.util.StatsUtils;
@@ -58,50 +56,6 @@ public class UsageStatisticsContext {
 	    } finally {
 	        Context.removeProxyPrivilege("Manage Scheduler");
 	    }
-	}
-	
-	/**
-	 * Registers the usage statistics MXBean with the JMX module
-	 */
-	public static void registerMBean() {
-		try {
-			UsageStatisticsMXBean bean = new UsageStatisticsMXBeanImpl();
-			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
-			Object jmxService = Context.getService(c);
-			Method regMethod = jmxService.getClass().getDeclaredMethod("registerMBean", String.class, String.class, Object.class);
-			regMethod.invoke(jmxService, Constants.MXBEAN_NAME, null, bean);
-			
-		} catch (Exception e) {
-			log.warn("JMX module not loaded. Unable to register MBean");
-		}
-	}
-	
-	/**
-	 * Unregisters the usage statistics MXBean with the JMX module
-	 */
-	public static void unregisterMBean() {
-		try {
-			Class<?> c = Context.loadClass("org.openmrs.module.jmx.JMXService");
-			Object jmxService = Context.getService(c);
-			Method unregMethod = jmxService.getClass().getDeclaredMethod("unregisterMBean", String.class, String.class);
-			unregMethod.invoke(jmxService, Constants.MXBEAN_NAME, null);
-			
-		} catch (Exception e) {
-			log.warn("JMX module not loaded. Unable to unregister MBean");
-		}
-	}
-	
-	/**
-	 * Checks if the JMX module is running
-	 * @return true if module is running
-	 */
-	public static boolean isJMXModuleRunning() {
-		try {
-			Context.loadClass("org.openmrs.module.jmx.JMXService");
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-		return true;
 	}
 
 	/**

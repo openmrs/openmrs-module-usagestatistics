@@ -33,11 +33,6 @@ public class UsageStatisticsActivator extends BaseModuleActivator {
 	public void started() {
 		log.info("Starting usage statistics module");
 		
-		if (Options.getInstance().isExposeJMXBean())
-			UsageStatisticsContext.registerMBean();
-		
-		log.info("Registered usage statistics management bean");
-		
 		UsageStatisticsContext.registerAggregationTask();
 		UsageStatisticsContext.registerSendReportsTask();
 		
@@ -50,11 +45,6 @@ public class UsageStatisticsActivator extends BaseModuleActivator {
 	@Override
 	public void stopped() {
 		log.info("Shutting down usage statistics module");
-		
-		if (Options.getInstance().isExposeJMXBean())
-			UsageStatisticsContext.unregisterMBean();
-		
-		log.info("Unregistered usage statistics management bean");
 
 		UsageStatisticsContext.unregisterTasks();
 		

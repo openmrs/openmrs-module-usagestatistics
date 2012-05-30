@@ -65,15 +65,6 @@
 			</td>
 		</tr>
 		<tr>
-			<td><spring:message code="usagestatistics.options.exposeJMXBean"/></td>
-			<td>
-				<ustats_form:checkbox path="exposeJMXBean" disabled="${not isJMXModuleRunning}" />
-				<c:if test="${not isJMXModuleRunning}">
-					<span class="error"><spring:message code="usagestatistics.options.jmxNotAvailable"/></span>
-				</c:if>
-			</td>
-		</tr>
-		<tr>
 			<td><input type="submit" value="<spring:message code="general.save" />" /></td>
 		</tr>
 	</table>
