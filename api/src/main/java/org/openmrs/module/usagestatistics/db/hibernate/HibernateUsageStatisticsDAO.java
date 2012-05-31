@@ -301,7 +301,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 		
 		return sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
 			.addEntity("l", Location.class)
-			.addScalar("count", Hibernate.LONG)
+			.addScalar("count")
 			.list();
 	}
 	
@@ -345,7 +345,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 		
 		return sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
 			.addEntity("f", Form.class)
-			.addScalar("count", Hibernate.LONG)
+			.addScalar("count")
 			.list();
 	}
 	
@@ -367,7 +367,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 		
 		return sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
 			.addEntity("et", EncounterType.class)
-			.addScalar("count", Hibernate.LONG)
+			.addScalar("count")
 			.list();
 	}
 	
