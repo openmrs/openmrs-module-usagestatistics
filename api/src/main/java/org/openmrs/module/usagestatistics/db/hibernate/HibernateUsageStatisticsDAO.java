@@ -221,7 +221,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT ");
 		sb.append("  u.user_id, ");
-		sb.append("  CONCAT(n.given_name, ' ', n.middle_name, ' ', n.family_name) AS user_name, ");
+		sb.append("  CONCAT(IFNULL(n.given_name,''), ' ', IFNULL(n.middle_name,''), ' ', IFNULL(n.family_name,'')) AS user_name, ");
 		sb.append("  SUM(d.usages) as `usages`, ");
 		sb.append("  SUM(d.creates) as `creates`, ");
 		sb.append("  SUM(d.encounters) as `encounters`, ");
