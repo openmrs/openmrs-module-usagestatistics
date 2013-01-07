@@ -546,8 +546,8 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 */
 	public boolean isPatientVoidedInDatabase(Patient patient) throws DAOException {
 		String sql = "SELECT voided FROM patient WHERE patient_id = " + patient.getPatientId() + ";";
-		Number res = (Number)sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
-		return res.intValue() == 1;
+		Object result = sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
+        return (result instanceof Number) ? (((Number)result).intValue() == 1) : (Boolean) result;
 	}
 
 	/**
