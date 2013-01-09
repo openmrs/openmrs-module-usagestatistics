@@ -14,9 +14,9 @@
 	</organization>
 
     <scm>
-        <connection>scm:git:https://github.com/rowanseymour/openmrs-module-usagestatistics/</connection>
-        <developerConnection>scm:git:https://github.com/rowanseymour/openmrs-module-usagestatistics/</developerConnection>
-        <url>https://github.com/rowanseymour/openmrs-module-usagestatistics/</url>
+        <connection>scm:git:git@github.com:openmrs/openmrs-module-usagestatistics.git</connection>
+        <developerConnection>scm:git:git@github.com:openmrs/openmrs-module-usagestatistics.git</developerConnection>
+        <url>scm:git:git@github.com:openmrs/openmrs-module-usagestatistics.git</url>
     </scm>
 
     <distributionManagement>
