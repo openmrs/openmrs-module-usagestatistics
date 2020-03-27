@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>usagestatistics</artifactId>
-	<version>1.4.3</version>
+	<version>1.4.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Usage Statistics</name>
 	<description>Parent project for Usage Statistics</description>
@@ -17,7 +17,7 @@
         <connection>scm:git:git@github.com:openmrs/openmrs-module-usagestatistics.git</connection>
         <developerConnection>scm:git:git@github.com:openmrs/openmrs-module-usagestatistics.git</developerConnection>
         <url>https://github.com/openmrs/openmrs-module-usagestatistics/</url>
-        <tag>1.4.3</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
