@@ -70,25 +70,33 @@ public class UsageStatisticsContext {
 	private static boolean registerTask(String name, String description, Class<? extends Task> clazz, long interval) {
 		try {
 			Context.addProxyPrivilege("Manage Scheduler");
-		
-			TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
-			if (taskDef == null) {
-				taskDef = new TaskDefinition();
-				taskDef.setTaskClass(clazz.getCanonicalName());
-				taskDef.setStartOnStartup(true);
-				taskDef.setRepeatInterval(interval);
-				taskDef.setStarted(true);
-				taskDef.setStartTime(StatsUtils.getPreviousMidnight(null));
-				taskDef.setName(name);
-				taskDef.setUuid(UUID.randomUUID().toString()); 
-				taskDef.setDescription(description);
-				Context.getSchedulerService().scheduleTask(taskDef);
+
+			// Situations have arisen where duplicate tasks are getting created, to be safe, delete existing tasks first
+			for (TaskDefinition existingTask : Context.getSchedulerService().getRegisteredTasks()) {
+				if (existingTask.getName() != null && existingTask.getName().equalsIgnoreCase(name)) {
+					Context.getSchedulerService().shutdownTask(existingTask);
+					Context.getSchedulerService().deleteTask(existingTask.getId());
+				}
 			}
+
+			// At this point, there should be no tasks with this name, so recreate from scratch
+			TaskDefinition taskDef = new TaskDefinition();
+			taskDef.setTaskClass(clazz.getCanonicalName());
+			taskDef.setStartOnStartup(true);
+			taskDef.setRepeatInterval(interval);
+			taskDef.setStarted(true);
+			taskDef.setStartTime(StatsUtils.getPreviousMidnight(null));
+			taskDef.setName(name);
+			taskDef.setUuid(UUID.randomUUID().toString());
+			taskDef.setDescription(description);
+			Context.getSchedulerService().scheduleTask(taskDef);
 			
-		} catch (SchedulerException ex) {
+		}
+		catch (SchedulerException ex) {
 			log.warn("Unable to register task '" + name + "' with scheduler", ex);
 			return false;
-		} finally {
+		}
+		finally {
 			Context.removeProxyPrivilege("Manage Scheduler");
 		}
 		return true;
