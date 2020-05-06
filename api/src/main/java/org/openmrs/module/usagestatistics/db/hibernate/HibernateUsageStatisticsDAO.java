@@ -24,10 +24,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
+
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.EncounterType;
@@ -51,7 +51,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	
 	protected static final Log log = LogFactory.getLog(HibernateUsageStatisticsDAO.class);
 	
-	protected SessionFactory sessionFactory;
+	protected DbSessionFactory sessionFactory;
 	protected static final String TABLE_USAGE = Constants.MODULE_ID + "_usage";
 	protected static final String TABLE_DAILY = Constants.MODULE_ID + "_daily";
 	protected static final String TABLE_ENCOUNTER = Constants.MODULE_ID + "_encounter";
@@ -61,7 +61,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * Set session factory
 	 * @param sessionFactory
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) { 
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	
@@ -103,9 +103,9 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 		sb.append("ORDER BY s.timestamp DESC ");
 		
 		sb.append("LIMIT " + paging.getPageOffset() + ", " + paging.getPageSize() + ";");
-		
-		Session session = sessionFactory.getCurrentSession();
-		
+
+		DbSession session = sessionFactory.getCurrentSession();
+
 		List<Usage> results = sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
 			.addEntity("s", Usage.class)
 			.list();
@@ -139,7 +139,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsageCount()
 	 */
 	public int getUsageCount() throws DAOException {
-		Session session = sessionFactory.getCurrentSession();
+		DbSession session = sessionFactory.getCurrentSession();
 		Number res = (Number)session.createSQLQuery("SELECT COUNT(*) FROM " + TABLE_USAGE + ";")
 			.uniqueResult();
 		return res.intValue();
@@ -149,7 +149,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getAggregateCount()
 	 */
 	public int getAggregateCount() throws DAOException {
-		Session session = sessionFactory.getCurrentSession();
+		DbSession session = sessionFactory.getCurrentSession();
 		Number res = (Number)session.createSQLQuery("SELECT COUNT(*) FROM " + TABLE_DAILY + ";")
 			.uniqueResult();
 		return res.intValue();
@@ -159,7 +159,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getAggregateCount()
 	 */
 	public int getRecordsAccessedCount(Date from) throws DAOException {
-		Session session = sessionFactory.getCurrentSession();
+		DbSession session = sessionFactory.getCurrentSession();
 		String sql = "SELECT COUNT(DISTINCT patient_id) FROM " + TABLE_USAGE + " WHERE timestamp >= FROM_UNIXTIME(" + (from.getTime() / 1000) + ");";
 		Number res = (Number)session.createSQLQuery(sql).uniqueResult();
 		return res.intValue();
@@ -501,7 +501,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 */
 	public int aggregateUsages() throws DAOException {
 		int locationAttrTypeId = Options.getInstance().getLocationAttributeTypeId();
-		Session session = sessionFactory.getCurrentSession();
+		DbSession session = sessionFactory.getCurrentSession();
 		
 		// Get last date in aggregate table
 		String sql = "SELECT MAX(date) FROM " + TABLE_DAILY + ";";
@@ -556,8 +556,8 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * @return a list of object arrays for each row
 	 */
 	@SuppressWarnings("unchecked")
-	protected List<Object[]> executeSQLQuery(String sql) {	
-		Session session = sessionFactory.getCurrentSession();
+	protected List<Object[]> executeSQLQuery(String sql) {
+		DbSession session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql);
 		return query.list();
 	}

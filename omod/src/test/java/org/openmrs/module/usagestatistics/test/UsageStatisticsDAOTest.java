@@ -3,6 +3,8 @@ package org.openmrs.module.usagestatistics.test;
 import junit.framework.Assert;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +19,9 @@ public class UsageStatisticsDAOTest {
 
     private HibernateUsageStatisticsDAO usageStatisticsDAO;
 
-    private SessionFactory mockSessionFactory;
+    private DbSessionFactory mockSessionFactory;
 
-    private Session mockSession;
+    private DbSession mockSession;
 
     private SQLQuery mockSQLQuery;
 
@@ -27,8 +29,8 @@ public class UsageStatisticsDAOTest {
     public void setup() {
         usageStatisticsDAO = new HibernateUsageStatisticsDAO();
 
-        mockSessionFactory = mock(SessionFactory.class);
-        mockSession = mock(Session.class);
+        mockSessionFactory = mock(DbSessionFactory.class);
+        mockSession = mock(DbSession.class);
         mockSQLQuery = mock(SQLQuery.class);
 
         usageStatisticsDAO.setSessionFactory(mockSessionFactory);

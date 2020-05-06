@@ -36,7 +36,7 @@
 							<property name="usageStatsDAO">
 								<bean class="org.openmrs.module.usagestatistics.db.hibernate.HibernateUsageStatisticsDAO">
 									<property name="sessionFactory">
-										<ref bean="sessionFactory" />
+										<ref bean="dbSessionFactory" />
 									</property>
 								</bean>
 							</property>
