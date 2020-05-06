@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<module configVersion="1.2">
+<module configVersion="1.3">
 	<id>@MODULE_ID@</id>
 	<name>@MODULE_NAME@</name>
 	<version>@MODULE_VERSION@</version>
@@ -9,8 +9,12 @@
 	<description>Statistics on usage of OpenMRS</description>
 	<activator>@MODULE_PACKAGE@.UsageStatisticsActivator</activator>
 	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
-	<require_version>1.8.3</require_version>
-	
+	<require_version>${openMRSVersion}</require_version>
+
+	<aware_of_modules>
+		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
+	</aware_of_modules>
+
 	<extension>
 		<point>org.openmrs.admin.maintenance.localHeader</point>
 		<class>@MODULE_PACKAGE@.web.extension.html.MaintenanceLinksExt</class>
