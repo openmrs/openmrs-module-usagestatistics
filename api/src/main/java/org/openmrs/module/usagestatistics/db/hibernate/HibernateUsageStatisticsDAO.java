@@ -73,7 +73,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsages(User, Patient, Date, Date, boolean, PagingInfo)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsages(User, Patient, Date, Date, ActionCriteria, PagingInfo) 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Usage> getUsages(User user, Patient patient, Date from, Date until, ActionCriteria filter, PagingInfo paging) throws DAOException {		
@@ -176,7 +176,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getLocationsStats(int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getLocationsStats(Date, Date, ActionCriteria) 
 	 */
 	public List<Object[]> getLocationsStats(Date from, Date until, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -195,7 +195,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getRolesStats(Location)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getRolesStats(Date, Date, Location, ActionCriteria) 
 	 */
 	public List<Object[]> getRolesStats(Date from, Date until, Location location, ActionCriteria filter) throws DAOException {	
 		StringBuffer sb = new StringBuffer();
@@ -215,7 +215,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsersStats(Location, String, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getUsersStats(Date, Date, Location, String, ActionCriteria) 
 	 */
 	public List<Object[]> getUsersStats(Date from, Date until, Location location, String role, ActionCriteria filter) throws DAOException {
 		StringBuffer sb = new StringBuffer();
@@ -350,7 +350,7 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonForms(Date, boolean, int)
+	 * @see org.openmrs.module.usagestatistics.db.UsageStatisticsDAO#getMostCommonEncounterTypes(Date, boolean, int) 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getMostCommonEncounterTypes(Date since, boolean formless, int maxResults) throws DAOException {
@@ -568,12 +568,6 @@ public class HibernateUsageStatisticsDAO implements UsageStatisticsDAO {
 	 * @return a list of object arrays for each row
 	 */
 	protected int executeJDBCUpdate(String sql) {	
-		Connection conn = sessionFactory.getCurrentSession().connection();
-		try {
-			Statement ps = conn.createStatement();
-			return ps.executeUpdate(sql);
-		} catch (SQLException ex) {
-			throw new DAOException(ex);
-		}
+		return sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
 	}
 }
