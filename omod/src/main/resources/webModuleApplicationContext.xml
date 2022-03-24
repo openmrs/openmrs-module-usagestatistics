@@ -20,8 +20,6 @@
   		    http://www.springframework.org/schema/util
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-
 	<context:component-scan base-package="org.openmrs.module.usagestatistics.web.controller" />
 
 	<!-- ========================= URL mappings ========================== -->
