@@ -65,7 +65,7 @@
 			  KEY `usagestatistics_encounter_encounter` (`encounter_id`),
 			  CONSTRAINT `usagestatistics_encounter_encounter` FOREIGN KEY (`encounter_id`) REFERENCES `encounter` (`encounter_id`),
 			  CONSTRAINT `usagestatistics_encounter_usage` FOREIGN KEY (`usage_id`) REFERENCES `usagestatistics_usage` (`usage_id`) ON DELETE CASCADE
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			
 			ALTER TABLE `usagestatistics_daily` ADD COLUMN `encounters` INT(5) NOT NULL DEFAULT 0 AFTER `creates`;
 		</sql>
