@@ -60,6 +60,7 @@ nb-configuration.xml
 
 ### Linux ###
 .*
+!.github/
 !.gitignore
 !.gitattributes
 *~
